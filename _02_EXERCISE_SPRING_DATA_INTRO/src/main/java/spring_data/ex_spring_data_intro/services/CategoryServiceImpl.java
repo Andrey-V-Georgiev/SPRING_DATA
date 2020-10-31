@@ -2,14 +2,11 @@ package spring_data.ex_spring_data_intro.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring_data.ex_spring_data_intro.constants.PathConstants;
 import spring_data.ex_spring_data_intro.entities.Category;
 import spring_data.ex_spring_data_intro.repositories.CategoryRepository;
 import spring_data.ex_spring_data_intro.utils.ReadFileUtil;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 import static spring_data.ex_spring_data_intro.constants.PathConstants.*;
 
@@ -27,6 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void seedCategories() throws IOException {
+        /* Check and seed only initially */
         if (this.categoryRepository.count() != 0) {
             return;
         }

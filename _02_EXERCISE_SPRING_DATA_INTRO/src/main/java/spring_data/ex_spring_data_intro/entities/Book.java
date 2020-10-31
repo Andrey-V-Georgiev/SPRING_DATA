@@ -26,15 +26,14 @@ public class Book extends BaseEntity{
     public Book() {
     }
 
-    public Book(AgeRestriction ageRestriction, long copies, String description,
-                EditionType editionType, BigDecimal price, LocalDate releaseDate, String title) {
+    public Book(AgeRestriction ageRestriction, long copies, EditionType editionType, BigDecimal price, LocalDate releaseDate, String title, Author author) {
         this.ageRestriction = ageRestriction;
         this.copies = copies;
-        this.description = description;
         this.editionType = editionType;
         this.price = price;
         this.releaseDate = releaseDate;
         this.title = title;
+        this.author = author;
     }
 
     @Column(name = "age_restriction", nullable = false)
