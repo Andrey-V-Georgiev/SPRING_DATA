@@ -101,4 +101,11 @@ public class BookServiceImpl implements BookService {
         List<Book> books = this.bookRepository.findAllByAgeRestriction(AgeRestriction.valueOf(ageRestriction.toUpperCase()));
         return books;
     }
+
+    @Override
+    public List<Book> findBooksByEditionTypeAndCopiesLessThan(String editionTypeStr, long copies) {
+        EditionType editionType = EditionType.valueOf(editionTypeStr);
+        List<Book> books = this.bookRepository.findBooksByEditionTypeAndCopiesLessThan(editionType, copies);
+        return books;
+    }
 }

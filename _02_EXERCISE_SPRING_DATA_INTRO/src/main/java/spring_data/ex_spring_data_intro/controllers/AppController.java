@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import spring_data.ex_spring_data_intro.entities.Book;
+import spring_data.ex_spring_data_intro.enums.EditionType;
 import spring_data.ex_spring_data_intro.services.AuthorService;
 import spring_data.ex_spring_data_intro.services.BookService;
 import spring_data.ex_spring_data_intro.services.CategoryService;
@@ -40,6 +41,9 @@ public class AppController implements CommandLineRunner {
 //        List<Book> books = this.bookService.findAllByAgeRestriction(ageRestriction);
 //        books.forEach(b -> System.out.println(b.getTitle()));
 
-
+        /* 2.Golden Books */
+//        this.bookService
+//                .findBooksByEditionTypeAndCopiesLessThan(EditionType.GOLD.name(), 5000)
+//                .forEach(b -> System.out.println(b.getTitle()));
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import spring_data.ex_spring_data_intro.entities.Book;
 import spring_data.ex_spring_data_intro.enums.AgeRestriction;
+import spring_data.ex_spring_data_intro.enums.EditionType;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,4 +17,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findAllByAgeRestriction(AgeRestriction ageRestriction);
 
+    List<Book> findBooksByEditionTypeAndCopiesLessThan(EditionType editionType, long copies);
 }
