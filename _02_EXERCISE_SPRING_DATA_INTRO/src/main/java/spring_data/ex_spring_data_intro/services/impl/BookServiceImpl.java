@@ -131,4 +131,47 @@ public class BookServiceImpl implements BookService {
         List<Book> books = this.bookRepository.findBooksByReleaseDateBefore(localDate);
         return books;
     }
+
+    @Override
+    public List<Book> findBooksByTitleContains(String containsString) {
+        List<Book> books = this.bookRepository.findBooksByTitleContains(containsString);
+        return books;
+    }
+
+    @Override
+    public List<Book> findBooksWrittenByAuthorWhoseLastNameStartsWith(String startsWithStr) {
+        List<Book> books = this.bookRepository.findBooksWrittenByAuthorWhoseLastNameStartsWith(startsWithStr);
+        return books;
+    }
+
+    @Override
+    public List<Book> findBooksByTitleLongerThan(int length) {
+        List<Book> books = this.bookRepository.findBooksByTitleLongerThan(length);
+        return books;
+    }
+
+    @Override
+    public int findCountOfCopiesByAuthorName(String name) {
+        int countOfCopies = this.bookRepository.findCountOfCopiesByAuthorName(name);
+        return countOfCopies;
+    }
+
+    @Override
+    public Book findBooksByTitle(String title) {
+        Book book = this.bookRepository.findBooksByTitle(title);
+        return book;
+    }
+
+    @Override
+    public int updateBooksByReleaseDateAfter(String localDateStr, long increaseValue) {
+        LocalDate localDate = LocalDate.parse(localDateStr, DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        int countOfUpdatedRows = this.bookRepository.updateBooksByReleaseDateAfter(localDate, increaseValue);
+        return countOfUpdatedRows;
+    }
+
+    @Override
+    public int deleteBooksByCopiesLowerThan(long countOfCopies) {
+        int countOfDeletedBooks = this.bookRepository.deleteBooksByCopiesLowerThan(countOfCopies);
+        return countOfDeletedBooks;
+    }
 }

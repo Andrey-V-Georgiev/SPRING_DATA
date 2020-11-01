@@ -65,19 +65,57 @@ public class AppController implements CommandLineRunner {
 //        books.forEach(b -> System.out.println(b.getTitle()));
 
         /* 6.Authors Search */
-        System.out.println("Enter ending string:");
-        String endingString = this.bufferedReader.readLine().trim();
-        List<Author> authors = this.authorService.findAuthorsByFirstNameEndsWith(endingString);
-        authors.forEach(a -> {
-            String output = String.format("%s %s", a.getFirstName(), a.getLastName());
-            System.out.println(output);
-        });
+//        System.out.println("Enter ending string:");
+//        String endingString = this.bufferedReader.readLine().trim();
+//        List<Author> authors = this.authorService.findAuthorsByFirstNameEndsWith(endingString);
+//        authors.forEach(a -> {
+//            String output = String.format("%s %s", a.getFirstName(), a.getLastName());
+//            System.out.println(output);
+//        });
 
         /* 7.Books Search */
-
+//        System.out.println("Enter contains string:");
+//        String containsString = this.bufferedReader.readLine().trim();
+//        List<Book> books = this.bookService.findBooksByTitleContains(containsString);
+//        books.forEach(b -> System.out.println(b.getTitle()));
 
         /* 8.Book Titles Search */
+//        System.out.println("Enter startsWithStr:");
+//        String startsWithStr = this.bufferedReader.readLine().trim();
+//        List<Book> books = this.bookService.findBooksWrittenByAuthorWhoseLastNameStartsWith(startsWithStr);
+//        books.forEach(b -> System.out.println(b.getTitle()));
 
+        /* 9.Count Books */
+//        System.out.println("Enter length:");
+//        int length = Integer.parseInt(this.bufferedReader.readLine().trim());
+//        List<Book> books = this.bookService.findBooksByTitleLongerThan(length);
+//        System.out.println(books.size());
+
+        /* 10.Total Book Copies */
+//        System.out.println("Enter author name:");
+//        String name = this.bufferedReader.readLine().trim();
+//        int countOfCopies = this.bookService.findCountOfCopiesByAuthorName(name);
+//        System.out.println(countOfCopies);
+
+        /* 11.Reduced Book */
+//        System.out.println("Enter book title:");
+//        String title = this.bufferedReader.readLine().trim();
+//        Book book = this.bookService.findBooksByTitle(title);
+//        System.out.printf("%s %s %s %.2f\n",
+//                book.getTitle(), book.getEditionType(), book.getAgeRestriction(), book.getPrice());
+
+        /* 12.Increase Book Copies */
+//        System.out.println("Enter date and increaseValue:");
+//        String date = this.bufferedReader.readLine().trim();
+//        long increaseValue = Long.parseLong(this.bufferedReader.readLine().trim());
+//        int countOfUpdatedRows = this.bookService.updateBooksByReleaseDateAfter(date, increaseValue);
+//        System.out.println(countOfUpdatedRows * increaseValue);
+
+        /* 13.Remove Books */
+//        System.out.println("Enter count of copies:");
+//        long countOfCopies = Long.parseLong(this.bufferedReader.readLine().trim());
+//        int countOfDeletedBooks = this.bookService.deleteBooksByCopiesLowerThan(countOfCopies);
+//        System.out.println(countOfDeletedBooks);
 
     }
 }
