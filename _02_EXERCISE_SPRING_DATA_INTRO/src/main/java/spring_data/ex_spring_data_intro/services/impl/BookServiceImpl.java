@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void seedBooks() throws IOException {
         /* Check and seed only initially */
-        if(this.bookRepository.count() > 0) {
+        if (this.bookRepository.count() > 0) {
             return;
         }
 
@@ -88,7 +88,7 @@ public class BookServiceImpl implements BookService {
 
             /* Save the book */
             this.bookRepository.saveAndFlush(book);
-      }
+        }
     }
 
     @Override
@@ -114,6 +114,21 @@ public class BookServiceImpl implements BookService {
         BigDecimal lessThan = new BigDecimal(lessThanLong);
         BigDecimal greatThan = new BigDecimal(greatThanLong);
         List<Book> books = this.bookRepository.findBooksByPriceLessThanOrPriceGreaterThan(lessThan, greatThan);
+        return books;
+    }
+
+    @Override
+    public List<Book> findBooksNotReleasedInYear(int year) {
+        LocalDate beforeDate = LocalDate.of(year, 1, 1);
+        LocalDate afterDate = LocalDate.of(year, 12, 31);
+        List<Book> books = this.bookRepository.findBooksByReleaseDateBeforeOrReleaseDateAfter(beforeDate, afterDate);
+        return books;
+    }
+
+    @Override
+    public List<Book> findBooksByReleaseDateBefore(String localDateStr) {
+        LocalDate localDate = LocalDate.parse(localDateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        List<Book> books = this.bookRepository.findBooksByReleaseDateBefore(localDate);
         return books;
     }
 }

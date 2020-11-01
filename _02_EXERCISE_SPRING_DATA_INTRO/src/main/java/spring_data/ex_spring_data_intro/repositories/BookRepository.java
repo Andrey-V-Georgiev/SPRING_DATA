@@ -21,4 +21,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findBooksByEditionTypeAndCopiesLessThan(EditionType editionType, long copies);
 
     List<Book> findBooksByPriceLessThanOrPriceGreaterThan(BigDecimal lessThan, BigDecimal greatThan);
+
+    List<Book> findBooksByReleaseDateBeforeOrReleaseDateAfter(LocalDate beforeDate, LocalDate afterDate);
+
+    List<Book> findBooksByReleaseDateBefore(LocalDate localDate);
 }

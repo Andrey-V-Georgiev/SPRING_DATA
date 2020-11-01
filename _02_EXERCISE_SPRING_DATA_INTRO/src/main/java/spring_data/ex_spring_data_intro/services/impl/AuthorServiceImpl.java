@@ -9,6 +9,7 @@ import spring_data.ex_spring_data_intro.services.AuthorService;
 import spring_data.ex_spring_data_intro.utils.ReadFileUtil;
 
 import java.io.IOException;
+import java.util.List;
 
 import static spring_data.ex_spring_data_intro.constants.PathConstants.AUTHORS_FILE_RELATIVE_PATH;
 import static spring_data.ex_spring_data_intro.constants.PathConstants.CATEGORIES_FILE_RELATIVE_PATH;
@@ -43,7 +44,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author getAuthorById(long id) {
-
         Author one = this.authorRepository.getOne(id);
         return one;
     }
@@ -51,5 +51,11 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public long getAuthorsCount() {
         return this.authorRepository.count();
+    }
+
+    @Override
+    public List<Author> findAuthorsByFirstNameEndsWith(String endingStr) {
+        List<Author> authors = this.authorRepository.findAuthorsByFirstNameEndsWith(endingStr);
+        return authors;
     }
 }
