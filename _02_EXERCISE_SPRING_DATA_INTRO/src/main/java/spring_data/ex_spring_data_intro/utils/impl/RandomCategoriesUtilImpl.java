@@ -1,9 +1,10 @@
-package spring_data.ex_spring_data_intro.utils;
+package spring_data.ex_spring_data_intro.utils.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spring_data.ex_spring_data_intro.entities.Category;
 import spring_data.ex_spring_data_intro.repositories.CategoryRepository;
+import spring_data.ex_spring_data_intro.utils.RandomCategoriesUtil;
 
 import java.util.*;
 

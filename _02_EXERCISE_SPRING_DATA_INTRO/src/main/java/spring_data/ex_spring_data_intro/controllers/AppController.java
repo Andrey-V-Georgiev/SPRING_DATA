@@ -8,8 +8,8 @@ import spring_data.ex_spring_data_intro.services.AuthorService;
 import spring_data.ex_spring_data_intro.services.BookService;
 import spring_data.ex_spring_data_intro.services.CategoryService;
 
-import java.util.Arrays;
-import java.util.List;
+import java.io.BufferedReader;
+import java.util.*;
 
 @Controller
 public class AppController implements CommandLineRunner {
@@ -17,12 +17,14 @@ public class AppController implements CommandLineRunner {
     private final CategoryService categoryService;
     private final AuthorService authorService;
     private final BookService bookService;
+    private final BufferedReader bufferedReader;
 
     @Autowired
-    public AppController(CategoryService categoryService, AuthorService authorService, BookService bookService) {
+    public AppController(CategoryService categoryService, AuthorService authorService, BookService bookService, BufferedReader bufferedReader) {
         this.categoryService = categoryService;
         this.authorService = authorService;
         this.bookService = bookService;
+        this.bufferedReader = bufferedReader;
     }
 
     @Override
@@ -32,8 +34,12 @@ public class AppController implements CommandLineRunner {
         this.authorService.seedAuthors();
         this.bookService.seedBooks();
 
-        /* Get all books after the year 2000. Print only their titles. */
-        List<Book> booksAfterYear = this.bookService.getAllBooksAfter2000();
-         booksAfterYear.forEach(b -> System.out.println(b.getTitle()));
+        /* 1.Books Titles by Age Restriction */
+//        System.out.println("Enter age restriction:");
+//        String ageRestriction = this.bufferedReader.readLine().trim();
+//        List<Book> books = this.bookService.findAllByAgeRestriction(ageRestriction);
+//        books.forEach(b -> System.out.println(b.getTitle()));
+
+
     }
 }
