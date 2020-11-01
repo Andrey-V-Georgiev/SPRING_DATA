@@ -108,4 +108,12 @@ public class BookServiceImpl implements BookService {
         List<Book> books = this.bookRepository.findBooksByEditionTypeAndCopiesLessThan(editionType, copies);
         return books;
     }
+
+    @Override
+    public List<Book> findBooksByPriceLessThanOrPriceGreaterThan(long lessThanLong, long greatThanLong) {
+        BigDecimal lessThan = new BigDecimal(lessThanLong);
+        BigDecimal greatThan = new BigDecimal(greatThanLong);
+        List<Book> books = this.bookRepository.findBooksByPriceLessThanOrPriceGreaterThan(lessThan, greatThan);
+        return books;
+    }
 }

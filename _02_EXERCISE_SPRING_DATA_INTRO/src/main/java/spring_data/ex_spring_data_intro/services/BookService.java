@@ -5,6 +5,7 @@ import spring_data.ex_spring_data_intro.enums.AgeRestriction;
 import spring_data.ex_spring_data_intro.enums.EditionType;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface BookService {
@@ -16,4 +17,6 @@ public interface BookService {
     List<Book> findAllByAgeRestriction(String ageRestriction);
 
     List<Book> findBooksByEditionTypeAndCopiesLessThan(String editionTypeStr, long copies);
+
+    List<Book> findBooksByPriceLessThanOrPriceGreaterThan(long lessThanLong, long greatThanLong);
 }

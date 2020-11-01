@@ -45,5 +45,10 @@ public class AppController implements CommandLineRunner {
 //        this.bookService
 //                .findBooksByEditionTypeAndCopiesLessThan(EditionType.GOLD.name(), 5000)
 //                .forEach(b -> System.out.println(b.getTitle()));
+
+        /* 3.Books by Price */
+        List<Book> books = this.bookService.findBooksByPriceLessThanOrPriceGreaterThan(5, 40);
+        books.forEach(b-> System.out.printf("%s - $%.2f\n", b.getTitle(), b.getPrice()));
+
     }
 }
