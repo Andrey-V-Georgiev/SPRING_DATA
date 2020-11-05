@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private UserSessionDto userSessionDto;
+    private UserSessionDto userSessionDto = null;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
@@ -58,5 +58,16 @@ public class UserServiceImpl implements UserService {
             this.userSessionDto = null;
             System.out.printf("User %s successfully logged out\n", userName);
         }
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return this.userSessionDto.getRole() == Role.ADMINISTRATOR;
+    }
+
+    @Override
+    public boolean isLogged() {
+        boolean loggedStatus = this.userSessionDto != null;
+        return loggedStatus;
     }
 }

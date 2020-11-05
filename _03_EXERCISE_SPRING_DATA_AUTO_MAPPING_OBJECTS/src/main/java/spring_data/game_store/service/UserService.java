@@ -10,4 +10,8 @@ public interface UserService {
     void loginUser(UserLoginDto dto);
 
     void logoutUser();
+
+    boolean isAdmin();
+
+    boolean isLogged();
 }
