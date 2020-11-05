@@ -3,7 +3,9 @@ package spring_data.game_store.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring_data.game_store.domain.dto.UserLoginDto;
 import spring_data.game_store.domain.dto.UserRegisterDto;
+import spring_data.game_store.domain.dto.UserSessionDto;
 import spring_data.game_store.domain.entity.User;
 import spring_data.game_store.domain.enumeration.Role;
 import spring_data.game_store.repository.UserRepository;
@@ -14,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private UserSessionDto userSessionDto;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
@@ -29,5 +32,31 @@ public class UserServiceImpl implements UserService {
         User savedUser = this.userRepository.saveAndFlush(user);
         System.out.printf("User %s was registered successfully\n", savedUser.getFullName());
         return savedUser.getId();
+    }
+
+    @Override
+    public void loginUser(UserLoginDto dto) {
+        if (this.userSessionDto != null) {
+            System.out.print("You are already logged in\n");
+            return;
+        }
+        User user = this.userRepository.findUserByEmail(dto.getEmail());
+        if (user == null) {
+            System.out.println("Wrong email");
+        } else {
+            this.userSessionDto = this.modelMapper.map(user, UserSessionDto.class);
+            System.out.printf("Hello %s\n", this.userSessionDto.getFullName());
+        }
+    }
+
+    @Override
+    public void logoutUser() {
+        if (this.userSessionDto == null) {
+            System.out.print("Cannot log out. No user was logged in\n");
+        } else {
+            String userName = this.userSessionDto.getFullName();
+            this.userSessionDto = null;
+            System.out.printf("User %s successfully logged out\n", userName);
+        }
     }
 }

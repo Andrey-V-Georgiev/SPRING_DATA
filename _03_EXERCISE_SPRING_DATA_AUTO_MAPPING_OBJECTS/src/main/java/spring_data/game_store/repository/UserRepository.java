@@ -6,4 +6,5 @@ import spring_data.game_store.domain.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findUserByEmail(String email);
 }

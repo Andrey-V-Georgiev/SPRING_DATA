@@ -3,6 +3,7 @@ package spring_data.game_store.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
+import spring_data.game_store.domain.dto.UserLoginDto;
 import spring_data.game_store.domain.dto.UserRegisterDto;
 import spring_data.game_store.service.DtoService;
 import spring_data.game_store.service.UserService;
@@ -34,13 +35,16 @@ public class AppController implements CommandLineRunner {
             System.out.println("Enter input:");
             String[] input = bufferedReader.readLine().split("\\|");
             String command = input[0];
+
             switch (command) {
                 case "RegisterUser":
                     UserRegisterDto userRegisterDto = this.dtoService.generateUserRegistrationDto(input);
+                    /* Check if email and confirmed email match */
                     if (userRegisterDto == null) {
                         System.out.println("Confirmed password doesn't match");
                         break;
                     }
+                    /* Validate registration input data */
                     if (this.validator.validate(userRegisterDto).isEmpty()) {
                         try {
                             this.userService.registerUser(userRegisterDto);
@@ -52,11 +56,24 @@ public class AppController implements CommandLineRunner {
                         this.validator.validate(userRegisterDto).forEach(System.out::println);
                     }
                     break;
+
                 case "LoginUser":
-
+                    UserLoginDto userLoginDto = this.dtoService.generateUserLoginDto(input);
+                    /* Validate login input data */
+                    if (this.validator.validate(userLoginDto).isEmpty()) {
+                        try {
+                            this.userService.loginUser(userLoginDto);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                    } else {
+                        this.validator.validate(userLoginDto).forEach(System.out::println);
+                    }
                     break;
-                case "Logout":
 
+                case "Logout":
+                    this.userService.logoutUser();
                     break;
 
             }
