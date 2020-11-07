@@ -1,10 +1,7 @@
 package spring_data.game_store.service.impl;
 
 import org.springframework.stereotype.Service;
-import spring_data.game_store.domain.dto.GameAddDto;
-import spring_data.game_store.domain.dto.GameEditDto;
-import spring_data.game_store.domain.dto.UserLoginDto;
-import spring_data.game_store.domain.dto.UserRegisterDto;
+import spring_data.game_store.domain.dto.*;
 import spring_data.game_store.service.DtoService;
 
 import java.math.BigDecimal;
@@ -93,6 +90,13 @@ public class DtoServiceImpl implements DtoService {
                     break;
             }
         }
+        return dto;
+    }
+
+    @Override
+    public GameDeleteDto generateGameDeleteDto(String[] input) {
+        GameDeleteDto dto = new GameDeleteDto();
+        dto.setId(Long.parseLong(input[1]));
         return dto;
     }
 }

@@ -1,9 +1,6 @@
 package spring_data.game_store.service;
 
-import spring_data.game_store.domain.dto.GameAddDto;
-import spring_data.game_store.domain.dto.GameEditDto;
-import spring_data.game_store.domain.dto.UserLoginDto;
-import spring_data.game_store.domain.dto.UserRegisterDto;
+import spring_data.game_store.domain.dto.*;
 
 public interface DtoService {
 
@@ -14,4 +11,6 @@ public interface DtoService {
     GameAddDto generateGameAddDto(String[] input);
 
     GameEditDto generateGameEditDto(String[] input);
+
+    GameDeleteDto generateGameDeleteDto(String[] input);
 }

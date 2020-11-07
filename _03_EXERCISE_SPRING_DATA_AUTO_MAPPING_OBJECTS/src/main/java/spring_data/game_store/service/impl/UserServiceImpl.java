@@ -11,6 +11,8 @@ import spring_data.game_store.domain.enumeration.Role;
 import spring_data.game_store.repository.UserRepository;
 import spring_data.game_store.service.UserService;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -40,13 +42,17 @@ public class UserServiceImpl implements UserService {
             System.out.print("You are already logged in\n");
             return;
         }
-        User user = this.userRepository.findUserByEmail(dto.getEmail());
-        if (user == null) {
+        Optional<User> userDB = this.userRepository.findUserByEmail(dto.getEmail());
+        if (userDB.isEmpty()) {
             System.out.println("Wrong email");
-        } else {
-            this.userSessionDto = this.modelMapper.map(user, UserSessionDto.class);
-            System.out.printf("Hello %s\n", this.userSessionDto.getFullName());
+            return;
         }
+        if(!dto.getPassword().equals(userDB.get().getPassword())) {
+            System.out.print("Unauthorized - wrong password\n");
+            return;
+        }
+        this.userSessionDto = this.modelMapper.map(userDB.get(), UserSessionDto.class);
+        System.out.printf("Hello %s\n", this.userSessionDto.getFullName());
     }
 
     @Override

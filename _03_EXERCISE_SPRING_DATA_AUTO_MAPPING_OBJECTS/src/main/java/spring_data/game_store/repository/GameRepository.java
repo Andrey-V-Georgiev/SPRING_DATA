@@ -40,4 +40,5 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query(value = "UPDATE Game g SET g.releaseDate = ?1 WHERE g.id = ?2")
     void updateReleaseDate(LocalDate releaseDate, long id);
 
+    void deleteGameById(long id);
 }

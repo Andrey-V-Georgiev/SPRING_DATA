@@ -4,6 +4,7 @@ import spring_data.game_store.constants.ErrorConstants;
 import spring_data.game_store.constants.RegexConstants;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -34,6 +35,7 @@ public class GameEditDto {
         this.releaseDate = releaseDate;
     }
 
+    @Min(value = 1)
     public long getId() {
         return id;
     }

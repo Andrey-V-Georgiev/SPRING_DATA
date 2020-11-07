@@ -47,63 +47,75 @@ public class GameServiceImpl implements GameService {
     @Override
     public void editGame(GameEditDto dto) {
         /* Check if exists by id */
-        Optional<Game> game = this.gameRepository.findById(dto.getId());
-        if (game.isEmpty()) {
+        Optional<Game> gameDB = this.gameRepository.findById(dto.getId());
+        if (gameDB.isEmpty()) {
             System.out.println("Bad request - wrong game id");
         } else {
+            Game gameEdit = this.modelMapper.map(dto, Game.class);
             Field[] fields = GameEditDto.class.getDeclaredFields();
             for (Field f : fields) {
                 String fieldName = f.getName();
+
                 switch (fieldName) {
                     case "title":
-                        String title = dto.getTitle();
+                        String title = gameEdit.getTitle();
                         if (title != null) {
-                            this.gameRepository.updateTitle(title, game.get().getId());
+                            this.gameRepository.updateTitle(title, gameEdit.getId());
                         }
                         break;
                     case "price":
-                        BigDecimal price = dto.getPrice();
+                        BigDecimal price = gameEdit.getPrice();
                         if (price != null) {
-                            this.gameRepository.updatePrice(price, game.get().getId());
+                            this.gameRepository.updatePrice(price, gameEdit.getId());
                         }
                         break;
                     case "size":
-                        Double size = dto.getSize();
+                        Double size = gameEdit.getSize();
                         if (size != null) {
-                            this.gameRepository.updateSize(size, game.get().getId());
+                            this.gameRepository.updateSize(size, gameEdit.getId());
                         }
                         break;
                     case "trailer":
-                        String trailer = dto.getTrailer();
+                        String trailer = gameEdit.getTrailer();
                         if (trailer != null) {
-                            this.gameRepository.updateTrailer(trailer, game.get().getId());
+                            this.gameRepository.updateTrailer(trailer, gameEdit.getId());
                         }
                         break;
                     case "image":
-                        String image = dto.getImage();
+                        String image = gameEdit.getImage();
                         if (image != null) {
-                            this.gameRepository.updateImage(image, game.get().getId());
+                            this.gameRepository.updateImage(image, gameEdit.getId());
                         }
                         break;
                     case "description":
-                        String description = dto.getDescription();
+                        String description = gameEdit.getDescription();
                         if (description != null) {
-                            this.gameRepository.updateDescription(description, game.get().getId());
+                            this.gameRepository.updateDescription(description, gameEdit.getId());
                         }
                         break;
                     case "releaseDate":
-                        LocalDate releaseDate = dto.getReleaseDate();
+                        LocalDate releaseDate = gameEdit.getReleaseDate();
                         if (releaseDate != null) {
-                            this.gameRepository.updateReleaseDate(releaseDate, game.get().getId());
+                            this.gameRepository.updateReleaseDate(releaseDate, gameEdit.getId());
                         }
                         break;
                 }
             }
+            System.out.printf("Game with id %d successfully edited\n", gameEdit.getId());
         }
     }
 
     @Override
     public void deleteGame(GameDeleteDto dto) {
+        /* Check if exists by id */
+        Optional<Game> gameDB = this.gameRepository.findById(dto.getId());
+        if (gameDB.isEmpty()) {
+            System.out.println("Bad request - wrong game id");
+        } else {
+            Game gameDelete = this.modelMapper.map(dto, Game.class);
+            this.gameRepository.deleteGameById(gameDelete.getId());
+            System.out.printf("Successfully delete game with id: %d", gameDelete.getId());
+        }
     }
 
 }

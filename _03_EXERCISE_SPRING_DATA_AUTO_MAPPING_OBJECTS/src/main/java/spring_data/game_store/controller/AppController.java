@@ -3,10 +3,7 @@ package spring_data.game_store.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
-import spring_data.game_store.domain.dto.GameAddDto;
-import spring_data.game_store.domain.dto.GameEditDto;
-import spring_data.game_store.domain.dto.UserLoginDto;
-import spring_data.game_store.domain.dto.UserRegisterDto;
+import spring_data.game_store.domain.dto.*;
 import spring_data.game_store.service.DtoService;
 import spring_data.game_store.service.GameService;
 import spring_data.game_store.service.UserService;
@@ -131,7 +128,24 @@ public class AppController implements CommandLineRunner {
 
                 /* A game should be deleted in case of valid id */
                 case "DeleteGame":
-
+                    /* Check for logged user */
+                    if (!this.userService.isLogged()) {
+                        System.out.println("No user was logged in\n");
+                        break;
+                    }
+                    GameDeleteDto gameDeleteDto = this.dtoService.generateGameDeleteDto(input);
+                    if (this.validator.validate(gameDeleteDto).isEmpty()) {
+                        try {
+                            this.gameService.deleteGame(gameDeleteDto);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else {
+                        Set<ConstraintViolation<GameDeleteDto>> violations = this.validator.validate(gameDeleteDto);
+                        for (ConstraintViolation<GameDeleteDto> violation : violations) {
+                            System.out.println(violation.getMessage());
+                        }
+                    }
                     break;
 
             }
