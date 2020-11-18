@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import spring_data.product_shop.utils.ValidationUtil;
+import spring_data.product_shop.utils.ValidationUtilImpl;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -25,8 +25,8 @@ public class AppBeanConfig {
     }
 
     @Bean
-    public Validator validator() {
-        return Validation.buildDefaultValidatorFactory().getValidator();
+    public ValidationUtil validationUtil() {
+        return new ValidationUtilImpl();
     }
 
     @Bean
