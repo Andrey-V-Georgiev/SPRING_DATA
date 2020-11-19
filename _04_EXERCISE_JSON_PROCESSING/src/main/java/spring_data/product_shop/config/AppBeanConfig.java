@@ -10,6 +10,7 @@ import spring_data.product_shop.utils.ValidationUtilImpl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 @Configuration
 public class AppBeanConfig {
@@ -17,6 +18,11 @@ public class AppBeanConfig {
     @Bean
     public BufferedReader bufferedReader() {
         return new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    @Bean
+    public Random random(){
+        return new Random();
     }
 
     @Bean

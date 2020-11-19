@@ -20,7 +20,7 @@ public class Category extends BaseEntity {
         this.name = name;
     }
 
-    @Length(min = 3)
+    @Length(min = 3, max = 15)
     @Column(name = "name")
     public String getName() {
         return name;

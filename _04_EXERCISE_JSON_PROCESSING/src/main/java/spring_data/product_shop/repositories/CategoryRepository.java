@@ -7,4 +7,5 @@ import spring_data.product_shop.models.entities.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+    Category getCategoryByName(String name);
 }
