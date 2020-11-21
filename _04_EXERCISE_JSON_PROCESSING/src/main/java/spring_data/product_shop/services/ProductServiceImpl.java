@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring_data.product_shop.models.dtos.ProductExportDto;
 import spring_data.product_shop.models.dtos.ProductSeedDto;
+import spring_data.product_shop.models.entities.Category;
 import spring_data.product_shop.models.entities.Product;
 import spring_data.product_shop.models.entities.User;
 import spring_data.product_shop.repositories.ProductRepository;
@@ -31,15 +32,17 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final UserService userService;
     private final FileUtil fileUtil;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ProductServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil, Gson gson, ProductRepository productRepository, UserService userService, FileUtil fileUtil) {
+    public ProductServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil, Gson gson, ProductRepository productRepository, UserService userService, FileUtil fileUtil, CategoryService categoryService) {
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
         this.gson = gson;
         this.productRepository = productRepository;
         this.userService = userService;
         this.fileUtil = fileUtil;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -60,6 +63,9 @@ public class ProductServiceImpl implements ProductService {
                 /* Set random buyers */
                 User randomBuyerOrNull = this.userService.getRandomUserOrNull();
                 product.setBuyer(randomBuyerOrNull);
+                /* Set random categories */
+                Set<Category> randomCategories = this.categoryService.getRandomCategories();
+                product.setCategories(randomCategories);
                 this.productRepository.saveAndFlush(product);
             } else {
                 this.validationUtil.printConstraintViolations(dto);

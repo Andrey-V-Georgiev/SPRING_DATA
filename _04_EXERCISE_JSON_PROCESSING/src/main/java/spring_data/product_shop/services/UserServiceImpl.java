@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void successfullySoldProducts() throws IOException {
+    public void successfullySoldProducts(String filePath) throws IOException {
         /* Get user from DB*/
         List<User> usersBD = this.userRepository.getUsersWhoSoldMoreThanOneProduct();
         List<UserExportDto> userDtos = new ArrayList<>();
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
             userDtos.add(userDto);
         }
         String userDtosJson = this.gson.toJson(userDtos);
-        this.fileUtil.writeFile(userDtosJson, QUERY_2_FILE_PATH);
+        this.fileUtil.writeFile(userDtosJson, filePath);
     }
 
 }

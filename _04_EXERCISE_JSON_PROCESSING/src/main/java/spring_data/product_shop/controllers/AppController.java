@@ -28,11 +28,13 @@ public class AppController implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         /* Seed data */
-//        this.userService.seedUsers(USERS_FILE_PATH);
-//        this.categoryService.seedCategories(CATEGORIES_FILE_PATH);
-//        this.productService.seedProducts(PRODUCT_FILE_PATH);
+        this.userService.seedUsers(USERS_FILE_PATH);
+        this.categoryService.seedCategories(CATEGORIES_FILE_PATH);
+        this.productService.seedProducts(PRODUCT_FILE_PATH);
+
         /* Queries */
-        //this.productService.productsInRange(new BigDecimal(500), new BigDecimal(1000));
-        this.userService.successfullySoldProducts();
+        this.productService.productsInRange(new BigDecimal(500), new BigDecimal(1000));
+        this.userService.successfullySoldProducts(QUERY_2_FILE_PATH);
+        this.categoryService.categoriesByProductsCount(QUERY_3_FILE_PATH);
     }
 }
