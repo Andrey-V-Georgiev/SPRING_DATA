@@ -7,6 +7,8 @@ import spring_data.product_shop.services.CategoryService;
 import spring_data.product_shop.services.ProductService;
 import spring_data.product_shop.services.UserService;
 
+import java.math.BigDecimal;
+
 import static spring_data.product_shop.constants.GlobalConstants.*;
 
 @Controller
@@ -25,8 +27,12 @@ public class AppController implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-            this.userService.seedUsers(USERS_FILE_PATH);
-            this.categoryService.seedCategories(CATEGORIES_FILE_PATH);
-            this.productService.seedProducts(PRODUCT_FILE_PATH);
+        /* Seed data */
+//        this.userService.seedUsers(USERS_FILE_PATH);
+//        this.categoryService.seedCategories(CATEGORIES_FILE_PATH);
+//        this.productService.seedProducts(PRODUCT_FILE_PATH);
+        /* Queries */
+        //this.productService.productsInRange(new BigDecimal(500), new BigDecimal(1000));
+        this.userService.successfullySoldProducts();
     }
 }
