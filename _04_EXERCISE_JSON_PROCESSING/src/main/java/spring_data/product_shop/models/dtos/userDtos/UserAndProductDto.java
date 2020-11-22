@@ -1,28 +1,29 @@
-package spring_data.product_shop.models.dtos;
+package spring_data.product_shop.models.dtos.userDtos;
 
 import com.google.gson.annotations.Expose;
+import spring_data.product_shop.models.dtos.productDtos.ProductsSoldByUserRootDto;
 
-import java.util.*;
+public class UserAndProductDto {
 
-public class UserExportDto {
-
-    @Expose
+    @Expose(serialize = false)
     private long id;
     @Expose
     private String firstName;
     @Expose
     private String lastName;
     @Expose
-    private List<ProductWithBuyerDetailsDto> soldProducts = new ArrayList<>();
+    private int age;
+    @Expose
+    private ProductsSoldByUserRootDto soldProducts;
 
-    public UserExportDto() {
+    public UserAndProductDto() {
     }
 
-    public UserExportDto(long id, String firstName, String lastName, List<ProductWithBuyerDetailsDto> soldProducts) {
+    public UserAndProductDto(long id, String firstName, String lastName, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.soldProducts = soldProducts;
+        this.age = age;
     }
 
     public long getId() {
@@ -49,11 +50,19 @@ public class UserExportDto {
         this.lastName = lastName;
     }
 
-    public List<ProductWithBuyerDetailsDto> getSoldProducts() {
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public ProductsSoldByUserRootDto getSoldProducts() {
         return soldProducts;
     }
 
-    public void setSoldProducts(List<ProductWithBuyerDetailsDto> soldProducts) {
+    public void setSoldProducts(ProductsSoldByUserRootDto soldProducts) {
         this.soldProducts = soldProducts;
     }
 }

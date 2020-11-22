@@ -3,6 +3,7 @@ package spring_data.product_shop.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import spring_data.product_shop.models.dtos.userDtos.UserAndProductDto;
 import spring_data.product_shop.models.entities.User;
 
 import java.util.*;
@@ -23,4 +24,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "ORDER BY u.last_name, u.first_name",
             nativeQuery = true)
     List<User> getUsersWhoSoldMoreThanOneProduct();
+
+
+    @Query(value = "SELECT new spring_data.product_shop.models.dtos.userDtos.UserAndProductDto(u.id, u.firstName, u.lastName, u.age)" +
+            " FROM Product AS p " +
+            " JOIN p.seller AS u" +
+            " WHERE p.buyer IS NOT NULL " +
+            " GROUP BY u.id" +
+            " ORDER BY count(p.id) desc, u.lastName ")
+    Set<UserAndProductDto> getUsersWithSoldProducts();
 }

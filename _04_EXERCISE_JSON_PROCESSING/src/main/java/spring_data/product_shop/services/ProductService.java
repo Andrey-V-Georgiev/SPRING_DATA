@@ -1,7 +1,7 @@
 package spring_data.product_shop.services;
 
-import spring_data.product_shop.models.dtos.ProductExportDto;
-import spring_data.product_shop.models.entities.Product;
+import spring_data.product_shop.models.dtos.productDtos.ProductExportDto;
+import spring_data.product_shop.models.dtos.productDtos.ProductSoldByUser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,4 +15,6 @@ public interface ProductService {
     void productsInRange(BigDecimal priceFrom, BigDecimal priceTo) throws IOException;
 
     List<ProductExportDto> getProductsWithBuyerBySellerId(long sellerId);
+
+    List<ProductSoldByUser> getProductsSoldByUser(long userId);
 }

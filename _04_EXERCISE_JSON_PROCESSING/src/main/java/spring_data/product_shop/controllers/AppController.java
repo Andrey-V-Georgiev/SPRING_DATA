@@ -7,6 +7,7 @@ import spring_data.product_shop.services.CategoryService;
 import spring_data.product_shop.services.ProductService;
 import spring_data.product_shop.services.UserService;
 
+
 import java.math.BigDecimal;
 
 import static spring_data.product_shop.constants.GlobalConstants.*;
@@ -36,5 +37,6 @@ public class AppController implements CommandLineRunner {
         this.productService.productsInRange(new BigDecimal(500), new BigDecimal(1000));
         this.userService.successfullySoldProducts(QUERY_2_FILE_PATH);
         this.categoryService.categoriesByProductsCount(QUERY_3_FILE_PATH);
+        this.userService.usersAndProducts(QUERY_4_FILE_PATH);
     }
 }

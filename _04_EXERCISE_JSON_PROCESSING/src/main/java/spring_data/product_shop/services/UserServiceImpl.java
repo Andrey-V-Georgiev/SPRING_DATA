@@ -4,10 +4,13 @@ import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring_data.product_shop.models.dtos.ProductExportDto;
-import spring_data.product_shop.models.dtos.ProductWithBuyerDetailsDto;
-import spring_data.product_shop.models.dtos.UserExportDto;
-import spring_data.product_shop.models.dtos.UserSeedDto;
+import spring_data.product_shop.models.dtos.productDtos.ProductSoldByUser;
+import spring_data.product_shop.models.dtos.productDtos.ProductWithBuyerDetailsDto;
+import spring_data.product_shop.models.dtos.productDtos.ProductsSoldByUserRootDto;
+import spring_data.product_shop.models.dtos.userDtos.UserAndProductDto;
+import spring_data.product_shop.models.dtos.userDtos.UserExportDto;
+import spring_data.product_shop.models.dtos.userDtos.UserSeedDto;
+import spring_data.product_shop.models.dtos.userDtos.UsersAndProductsRootDto;
 import spring_data.product_shop.models.entities.Product;
 import spring_data.product_shop.models.entities.User;
 import spring_data.product_shop.repositories.ProductRepository;
@@ -20,9 +23,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static spring_data.product_shop.constants.GlobalConstants.QUERY_2_FILE_PATH;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -105,4 +105,26 @@ public class UserServiceImpl implements UserService {
         this.fileUtil.writeFile(userDtosJson, filePath);
     }
 
+    @Override
+    public void usersAndProducts(String filePath) throws IOException {
+        /* Create user root Dto */
+        UsersAndProductsRootDto usersRootDto = new UsersAndProductsRootDto();
+        Set<UserAndProductDto> usersDtos = this.userRepository.getUsersWithSoldProducts();
+        for (UserAndProductDto u : usersDtos) {
+            /* Create product root Dto */
+            ProductsSoldByUserRootDto productsRootDto = new ProductsSoldByUserRootDto();
+            List<ProductSoldByUser> soldProductDtos = this.productRepository.getSoldProductsByUser(u.getId());
+            /* Set product root Dto properties */
+            productsRootDto.setCount(soldProductDtos.size());
+            productsRootDto.setProducts(soldProductDtos);
+            /* Set sold products to user */
+            u.setSoldProducts(productsRootDto);
+        }
+        /* Set users with products to root Dto */
+        usersRootDto.setUsersCount(usersDtos.size());
+        usersRootDto.setUsers(usersDtos);
+        /* Convert in Json and write to file */
+        String usersRootDtoJson = this.gson.toJson(usersRootDto);
+        this.fileUtil.writeFile(usersRootDtoJson, filePath);
+    }
 }

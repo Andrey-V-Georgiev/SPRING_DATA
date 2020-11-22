@@ -15,4 +15,6 @@ public interface UserService {
     User getRandomUserOrNull();
 
     void successfullySoldProducts(String filePath) throws IOException;
+
+    void usersAndProducts(String filePath) throws IOException;
 }

@@ -1,4 +1,4 @@
-package spring_data.product_shop.models.dtos;
+package spring_data.product_shop.models.dtos.categoryDtos;
 
 import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;

@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring_data.product_shop.models.dtos.ProductExportDto;
-import spring_data.product_shop.models.dtos.ProductSeedDto;
+import spring_data.product_shop.models.dtos.productDtos.ProductExportDto;
+import spring_data.product_shop.models.dtos.productDtos.ProductSeedDto;
+import spring_data.product_shop.models.dtos.productDtos.ProductSoldByUser;
 import spring_data.product_shop.models.entities.Category;
 import spring_data.product_shop.models.entities.Product;
 import spring_data.product_shop.models.entities.User;
@@ -76,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void productsInRange(BigDecimal priceFrom, BigDecimal priceTo) throws IOException {
         List<Product> productsDB = this.productRepository.getAllByPriceBetweenAndBuyerIsNull(priceFrom, priceTo);
-        List<ProductExportDto> productDtos =  new ArrayList<>();
+        List<ProductExportDto> productDtos = new ArrayList<>();
         for (Product p : productsDB) {
             ProductExportDto exportDto = this.modelMapper.map(p, ProductExportDto.class);
             exportDto.setSeller(String.format("%s %s", p.getSeller().getFirstName(), p.getSeller().getLastName()));
@@ -96,4 +97,11 @@ public class ProductServiceImpl implements ProductService {
         }
         return productDtos;
     }
+
+    @Override
+    public List<ProductSoldByUser> getProductsSoldByUser(long userId) {
+        List<ProductSoldByUser> soldProductsByUser = this.productRepository.getSoldProductsByUser(userId);
+        return soldProductsByUser;
+    }
 }
+
