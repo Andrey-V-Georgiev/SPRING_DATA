@@ -6,4 +6,6 @@ import spring_data.car_dealer.models.entities.Supplier;
 
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
+
+    Supplier findSupplierByName(String name);
 }

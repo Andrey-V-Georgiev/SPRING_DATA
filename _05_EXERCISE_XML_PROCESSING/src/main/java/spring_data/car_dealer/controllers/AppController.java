@@ -21,7 +21,6 @@ public class AppController implements CommandLineRunner {
     public void run(String... args) throws Exception {
         /* Seed data */
         this.supplierService.seedSuppliers(SUPPLIERS_FILE_PATH);
-
         /* Queries */
     }
 }

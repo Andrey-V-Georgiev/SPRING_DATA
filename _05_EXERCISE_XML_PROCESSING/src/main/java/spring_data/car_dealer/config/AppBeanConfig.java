@@ -6,7 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import spring_data.car_dealer.utils.ValidationUtil;
+import spring_data.car_dealer.utils.XmlParser;
 import spring_data.car_dealer.utils.impl.ValidationUtilImpl;
+import spring_data.car_dealer.utils.impl.XmlParserImpl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,7 +23,7 @@ public class AppBeanConfig {
     }
 
     @Bean
-    public Random random(){
+    public Random random() {
         return new Random();
     }
 
@@ -41,5 +43,10 @@ public class AppBeanConfig {
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .create();
+    }
+
+    @Bean
+    public XmlParser xmlParser() {
+        return new XmlParserImpl();
     }
 }
