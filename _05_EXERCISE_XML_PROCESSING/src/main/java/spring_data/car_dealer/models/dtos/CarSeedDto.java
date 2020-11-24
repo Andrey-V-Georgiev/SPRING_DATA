@@ -1,28 +1,30 @@
-package spring_data.car_dealer.models.entities;
+package spring_data.car_dealer.models.dtos;
 
-import javax.persistence.*;
 import javax.validation.constraints.Min;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.*;
 
-@Entity
-@Table(name = "cars")
-public class Car extends BaseEntity {
+@XmlRootElement(name = "car")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class CarSeedDto {
 
+    @XmlElement(name = "make")
     private String make;
+    @XmlElement(name = "model")
     private String model;
+    @XmlElement(name = "travelled-distance")
     private int travelledDistance;
-    private List<Part> parts = new ArrayList<>();
 
-    public Car() {
+    public CarSeedDto() {
     }
 
-    public Car(String make, String model, int travelledDistance) {
+    public CarSeedDto(String make, String model, int travelledDistance) {
         this.make = make;
         this.model = model;
         this.travelledDistance = travelledDistance;
     }
 
+    @NotNull
     public String getMake() {
         return make;
     }
@@ -31,6 +33,7 @@ public class Car extends BaseEntity {
         this.make = make;
     }
 
+    @NotNull
     public String getModel() {
         return model;
     }
@@ -39,22 +42,12 @@ public class Car extends BaseEntity {
         this.model = model;
     }
 
-    @Column(name = "travelled_distance")
-    @Min(0)
+    @Min(value = 0, message = "Car travelled distance cannot be negative number")
     public int getTravelledDistance() {
         return travelledDistance;
     }
 
     public void setTravelledDistance(int travelledDistance) {
         this.travelledDistance = travelledDistance;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    public List<Part> getParts() {
-        return parts;
-    }
-
-    public void setParts(List<Part> parts) {
-        this.parts = parts;
     }
 }

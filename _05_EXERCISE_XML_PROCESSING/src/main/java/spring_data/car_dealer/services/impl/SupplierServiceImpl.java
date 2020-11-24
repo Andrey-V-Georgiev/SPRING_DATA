@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring_data.car_dealer.models.dtos.SupplierSeedDto;
-import spring_data.car_dealer.models.dtos.SuppliersSeedRootDto;
+import spring_data.car_dealer.models.dtos.SupplierSeedRootDto;
 import spring_data.car_dealer.models.entities.Supplier;
 import spring_data.car_dealer.repositories.SupplierRepository;
 import spring_data.car_dealer.services.RandomService;
@@ -15,6 +15,7 @@ import spring_data.car_dealer.utils.XmlParser;
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
@@ -36,20 +37,24 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void seedSuppliers(String filePath) throws JAXBException, FileNotFoundException {
-        SuppliersSeedRootDto suppliersRootDtos = this.xmlParser.unmarshalFromFile(filePath, SuppliersSeedRootDto.class);
-        if (this.validationUtil.isValid(suppliersRootDtos)) {
-            List<SupplierSeedDto> suppliersDtos = suppliersRootDtos.getSuppliers();
+        SupplierSeedRootDto supplierRootDtos = this.xmlParser.unmarshalFromFile(filePath, SupplierSeedRootDto.class);
+        if (this.validationUtil.isValid(supplierRootDtos)) {
+            List<SupplierSeedDto> suppliersDtos = supplierRootDtos.getSuppliers();
             for (SupplierSeedDto s : suppliersDtos) {
-                Supplier supplierByName = this.supplierRepository.findSupplierByName(s.getName());
-                if (supplierByName == null) {
-                    Supplier supplier = this.modelMapper.map(s, Supplier.class);
-                    this.supplierRepository.saveAndFlush(supplier);
+                if (this.validationUtil.isValid(s)) {
+                    Optional<Supplier> supplierOptional = this.supplierRepository.findSupplierByName(s.getName());
+                    if (supplierOptional.isEmpty()) {
+                        Supplier supplier = this.modelMapper.map(s, Supplier.class);
+                        this.supplierRepository.saveAndFlush(supplier);
+                    } else {
+                        System.out.printf("Supplier with name %s already exists%n", s.getName());
+                    }
                 } else {
-                    System.out.printf("Supplier with name %s already exists%n", s.getName());
+                    this.validationUtil.printConstraintViolations(s);
                 }
             }
         } else {
-            this.validationUtil.printConstraintViolations(suppliersRootDtos);
+            this.validationUtil.printConstraintViolations(supplierRootDtos);
         }
     }
 

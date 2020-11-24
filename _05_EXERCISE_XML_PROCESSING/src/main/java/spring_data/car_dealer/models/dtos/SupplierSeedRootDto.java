@@ -9,15 +9,15 @@ import java.util.*;
 
 @XmlRootElement(name = "suppliers")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SuppliersSeedRootDto {
+public class SupplierSeedRootDto {
 
     @XmlElement(name = "supplier")
     private List<SupplierSeedDto> suppliers;
 
-    public SuppliersSeedRootDto() {
+    public SupplierSeedRootDto() {
     }
 
-    public SuppliersSeedRootDto(List<SupplierSeedDto> suppliers) {
+    public SupplierSeedRootDto(List<SupplierSeedDto> suppliers) {
         this.suppliers = suppliers;
     }
 

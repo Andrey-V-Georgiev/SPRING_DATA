@@ -1,28 +1,36 @@
-package spring_data.car_dealer.models.entities;
+package spring_data.car_dealer.models.dtos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.time.LocalDate;
+import spring_data.car_dealer.adapters.LocalDateTimeAdapter;
+
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "customers")
-public class Customer extends BaseEntity {
+@XmlRootElement(name = "customer")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class CustomerSeedDto {
 
+    @XmlAttribute(name = "name")
     private String name;
+
+    @XmlElement(name = "birth-date")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime birthDate;
+
+    @XmlElement(name = "is-young-driver")
     private boolean isYoungDriver;
 
-    public Customer() {
+    public CustomerSeedDto() {
     }
 
-    public Customer(String name, LocalDateTime birthDate, boolean isYoungDriver) {
+    public CustomerSeedDto(String name, LocalDateTime birthDate, boolean isYoungDriver) {
         this.name = name;
         this.birthDate = birthDate;
         this.isYoungDriver = isYoungDriver;
     }
 
+    @NotNull
     public String getName() {
         return name;
     }
@@ -31,7 +39,7 @@ public class Customer extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "birth_date")
+    @NotNull
     public LocalDateTime getBirthDate() {
         return birthDate;
     }
@@ -40,7 +48,7 @@ public class Customer extends BaseEntity {
         this.birthDate = birthDate;
     }
 
-    @Column(name = "is_young_driver")
+    @NotNull
     public boolean isYoungDriver() {
         return isYoungDriver;
     }
