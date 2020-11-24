@@ -7,8 +7,8 @@ import spring_data.car_dealer.models.dtos.SupplierSeedDto;
 import spring_data.car_dealer.models.dtos.SuppliersSeedRootDto;
 import spring_data.car_dealer.models.entities.Supplier;
 import spring_data.car_dealer.repositories.SupplierRepository;
+import spring_data.car_dealer.services.RandomService;
 import spring_data.car_dealer.services.SupplierService;
-import spring_data.car_dealer.utils.RandomUtil;
 import spring_data.car_dealer.utils.ValidationUtil;
 import spring_data.car_dealer.utils.XmlParser;
 
@@ -23,15 +23,15 @@ public class SupplierServiceImpl implements SupplierService {
     private final ValidationUtil validationUtil;
     private final ModelMapper modelMapper;
     private final SupplierRepository supplierRepository;
-    private final RandomUtil randomUtil;
+    private final RandomService randomService;
 
     @Autowired
-    public SupplierServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, SupplierRepository supplierRepository, RandomUtil randomUtil) {
+    public SupplierServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, SupplierRepository supplierRepository, RandomService randomService) {
         this.xmlParser = xmlParser;
         this.validationUtil = validationUtil;
         this.modelMapper = modelMapper;
         this.supplierRepository = supplierRepository;
-        this.randomUtil = randomUtil;
+        this.randomService = randomService;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public Supplier getRandomSupplier() {
         int repoCount = (int) this.supplierRepository.count();
-        Supplier randomSupplier = (Supplier) this.randomUtil.getRandomInstance(
+        Supplier randomSupplier = this.randomService.getRandomInstance(
                 repoCount,  Supplier.class, this.supplierRepository
         );
         return randomSupplier;
