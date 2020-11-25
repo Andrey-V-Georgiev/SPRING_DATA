@@ -10,4 +10,8 @@ public interface CarService {
     void seedCars(String filePath) throws JAXBException, FileNotFoundException;
 
     Car getRandomCar();
+
+    void exportCarsFromMake(String filePath, String make) throws JAXBException;
+
+    void exportCarsWithTheirListOfParts(String filePath) throws JAXBException;
 }

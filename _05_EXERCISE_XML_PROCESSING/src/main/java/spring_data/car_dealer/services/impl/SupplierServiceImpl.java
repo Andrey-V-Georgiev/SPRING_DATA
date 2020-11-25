@@ -3,6 +3,8 @@ package spring_data.car_dealer.services.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring_data.car_dealer.models.dtos.exportdtos.SupplierExportDto;
+import spring_data.car_dealer.models.dtos.exportdtos.SupplierExportRootDto;
 import spring_data.car_dealer.models.dtos.importdtos.SupplierSeedDto;
 import spring_data.car_dealer.models.dtos.importdtos.SupplierSeedRootDto;
 import spring_data.car_dealer.models.entities.Supplier;
@@ -16,6 +18,7 @@ import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
@@ -62,8 +65,16 @@ public class SupplierServiceImpl implements SupplierService {
     public Supplier getRandomSupplier() {
         int repoCount = (int) this.supplierRepository.count();
         Supplier randomSupplier = this.randomService.getRandomInstance(
-                repoCount,  Supplier.class, this.supplierRepository
+                repoCount, Supplier.class, this.supplierRepository
         );
         return randomSupplier;
+    }
+
+    @Override
+    public void exportLocalSuppliers(String filePath) throws JAXBException {
+        List<SupplierExportDto> supplierExportDtos = this.supplierRepository.findSuppliersNotImporters();
+        SupplierExportRootDto supplierExportRootDto = new SupplierExportRootDto();
+        supplierExportRootDto.setSuppliers(supplierExportDtos);
+        this.xmlParser.marshalToFile(filePath, supplierExportRootDto);
     }
 }

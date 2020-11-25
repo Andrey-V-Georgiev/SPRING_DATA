@@ -10,4 +10,6 @@ public interface SupplierService {
     void seedSuppliers(String filePath) throws JAXBException, FileNotFoundException;
 
     Supplier getRandomSupplier();
+
+    void exportLocalSuppliers(String filePath) throws JAXBException;
 }

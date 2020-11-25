@@ -2,6 +2,7 @@ package spring_data.car_dealer.services.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import spring_data.car_dealer.models.dtos.exportdtos.PartExportDto;
 import spring_data.car_dealer.models.dtos.importdtos.PartSeedDto;
 import spring_data.car_dealer.models.dtos.importdtos.PartSeedRootDto;
 import spring_data.car_dealer.models.entities.Part;
@@ -77,5 +78,11 @@ public class PartServiceImpl implements PartService {
                 lowerBorder, upperBorder, Part.class, this.partRepository
         );
         return randomPartsList;
+    }
+
+    @Override
+    public List<PartExportDto> findPartsAllPerCarId(Long carId) {
+        List<PartExportDto> partDtos = this.partRepository.findPartsAllPerCarId(carId);
+        return partDtos;
     }
 }
