@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import spring_data.car_dealer.models.entities.Customer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,4 +14,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "SELECT c FROM Customer AS c WHERE c.name = ?1 AND c.birthDate = ?2 AND c.youngDriver = ?3")
     Optional<Customer> findCustomer(String name, LocalDateTime dateOfBirth, boolean isYoungDriver);
+
+
+    @Query(value = " SELECT c" +
+            " FROM Customer AS c " +
+            " GROUP BY c.id")
+    List<Customer> findCustomersAllOrderByBirthDateTHenByYoungDriver();
 }

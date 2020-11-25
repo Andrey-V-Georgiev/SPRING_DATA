@@ -2,8 +2,8 @@ package spring_data.car_dealer.services.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import spring_data.car_dealer.models.dtos.PartSeedDto;
-import spring_data.car_dealer.models.dtos.PartSeedRootDto;
+import spring_data.car_dealer.models.dtos.importdtos.PartSeedDto;
+import spring_data.car_dealer.models.dtos.importdtos.PartSeedRootDto;
 import spring_data.car_dealer.models.entities.Part;
 import spring_data.car_dealer.models.entities.Supplier;
 import spring_data.car_dealer.repositories.PartRepository;

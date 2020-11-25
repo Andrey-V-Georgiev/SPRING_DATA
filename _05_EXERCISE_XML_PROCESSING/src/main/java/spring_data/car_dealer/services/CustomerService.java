@@ -10,4 +10,6 @@ public interface CustomerService {
     void seedCustomers(String filePath) throws JAXBException, FileNotFoundException;
 
     Customer getRandomCustomer();
+
+    void exportOrderedCustomers(String filePath) throws JAXBException;
 }

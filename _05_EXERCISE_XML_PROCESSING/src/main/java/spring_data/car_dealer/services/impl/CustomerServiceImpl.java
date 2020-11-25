@@ -3,9 +3,10 @@ package spring_data.car_dealer.services.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring_data.car_dealer.models.dtos.CustomerSeedDto;
-import spring_data.car_dealer.models.dtos.CustomerSeedRootDto;
-import spring_data.car_dealer.models.entities.Car;
+import spring_data.car_dealer.models.dtos.exportdtos.CustomerExportDto;
+import spring_data.car_dealer.models.dtos.exportdtos.CustomersExportRootDto;
+import spring_data.car_dealer.models.dtos.importdtos.CustomerSeedDto;
+import spring_data.car_dealer.models.dtos.importdtos.CustomerSeedRootDto;
 import spring_data.car_dealer.models.entities.Customer;
 import spring_data.car_dealer.repositories.CustomerRepository;
 import spring_data.car_dealer.services.CustomerService;
@@ -17,6 +18,7 @@ import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -68,8 +70,20 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer getRandomCustomer() {
         int repoCount = (int) this.customerRepository.count();
         Customer randomCustomer = this.randomService.getRandomInstance(
-                repoCount,  Customer.class, this.customerRepository
+                repoCount, Customer.class, this.customerRepository
         );
         return randomCustomer;
+    }
+
+    @Override
+    public void exportOrderedCustomers(String filePath) throws JAXBException {
+        List<Customer> customers = this.customerRepository.findCustomersAllOrderByBirthDateTHenByYoungDriver();
+        List<CustomerExportDto> customerExportDtos = customers
+                .stream()
+                .map(c -> this.modelMapper.map(c, CustomerExportDto.class))
+                .collect(Collectors.toList());
+        CustomersExportRootDto customersExportRootDto = new CustomersExportRootDto();
+        customersExportRootDto.setCustomers(customerExportDtos);
+        this.xmlParser.marshalToFile(filePath, customersExportRootDto);
     }
 }

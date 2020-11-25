@@ -9,5 +9,10 @@ public class GlobalConstants {
     public static final String SUPPLIERS_FILE_PATH = "src/main/resources/files/input/suppliers.xml";
 
     /* Output files paths */
-
+    public static final String QUERY_1_FILE_PATH = "src/main/resources/files/output/query_1";
+    public static final String QUERY_2_FILE_PATH = "src/main/resources/files/output/query_2";
+    public static final String QUERY_3_FILE_PATH = "src/main/resources/files/output/query_3";
+    public static final String QUERY_4_FILE_PATH = "src/main/resources/files/output/query_4";
+    public static final String QUERY_5_FILE_PATH = "src/main/resources/files/output/query_5";
+    public static final String QUERY_6_FILE_PATH = "src/main/resources/files/output/query_6";
 }

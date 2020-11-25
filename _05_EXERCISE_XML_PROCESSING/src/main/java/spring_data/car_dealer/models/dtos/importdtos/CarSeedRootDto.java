@@ -1,4 +1,4 @@
-package spring_data.car_dealer.models.dtos;
+package spring_data.car_dealer.models.dtos.importdtos;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;

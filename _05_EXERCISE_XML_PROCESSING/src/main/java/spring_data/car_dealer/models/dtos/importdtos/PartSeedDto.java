@@ -1,4 +1,4 @@
-package spring_data.car_dealer.models.dtos;
+package spring_data.car_dealer.models.dtos.importdtos;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;

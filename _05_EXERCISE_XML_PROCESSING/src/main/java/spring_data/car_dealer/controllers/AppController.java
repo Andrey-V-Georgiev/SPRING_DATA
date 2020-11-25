@@ -3,7 +3,7 @@ package spring_data.car_dealer.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
-import spring_data.car_dealer.constants.GlobalConstants;
+import spring_data.car_dealer.constants.*;
 import spring_data.car_dealer.services.*;
 
 @Controller
@@ -27,12 +27,13 @@ public class AppController implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         /* Seed data */
-        this.supplierService.seedSuppliers(GlobalConstants.SUPPLIERS_FILE_PATH);
-        this.partService.seedParts(GlobalConstants.PARTS_FILE_PATH);
-        this.carService.seedCars(GlobalConstants.CARS_FILE_PATH);
-        this.customerService.seedCustomers(GlobalConstants.CUSTOMERS_FILE_PATH);
-        this.saleService.seedSales();
+//        this.supplierService.seedSuppliers(GlobalConstants.SUPPLIERS_FILE_PATH);
+//        this.partService.seedParts(GlobalConstants.PARTS_FILE_PATH);
+//        this.carService.seedCars(GlobalConstants.CARS_FILE_PATH);
+//        this.customerService.seedCustomers(GlobalConstants.CUSTOMERS_FILE_PATH);
+//        this.saleService.seedSales();
 
         /* Queries */
+        this.customerService.exportOrderedCustomers(GlobalConstants.QUERY_1_FILE_PATH);
     }
 }
