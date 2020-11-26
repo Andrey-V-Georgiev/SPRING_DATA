@@ -6,4 +6,6 @@ import spring_data.car_dealer.models.entities.Sale;
 
 @Repository
 public interface SaleRepository extends JpaRepository<Sale, Long> {
+
+
 }

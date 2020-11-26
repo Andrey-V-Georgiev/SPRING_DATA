@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customers>
+    <customer>
+        <id>18</id>
+        <full-name>Taina Achenbach</full-name>
+        <bought-cars>4</bought-cars>
+        <spent-money>23887.79</spent-money>
+    </customer>
+    <customer>
+        <id>13</id>
+        <full-name>Oren Perlman</full-name>
+        <bought-cars>3</bought-cars>
+        <spent-money>17159.02</spent-money>
+    </customer>
+    <customer>
+        <id>15</id>
+        <full-name>Kristian Engberg</full-name>
+        <bought-cars>2</bought-cars>
+        <spent-money>17045.06</spent-money>
+    </customer>
+    <customer>
+        <id>23</id>
+        <full-name>Faustina Burgher</full-name>
+        <bought-cars>3</bought-cars>
+        <spent-money>14149.17</spent-money>
+    </customer>
+    <customer>
+        <id>10</id>
+        <full-name>Audrea Cardinal</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>16507.36</spent-money>
+    </customer>
+    <customer>
+        <id>22</id>
+        <full-name>Daniele Zarate</full-name>
+        <bought-cars>2</bought-cars>
+        <spent-money>14015.04</spent-money>
+    </customer>
+    <customer>
+        <id>12</id>
+        <full-name>Carole Witman</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>13192.43</spent-money>
+    </customer>
+    <customer>
+        <id>19</id>
+        <full-name>Yvonne Mccalla</full-name>
+        <bought-cars>3</bought-cars>
+        <spent-money>11646.11</spent-money>
+    </customer>
+    <customer>
+        <id>2</id>
+        <full-name>Natalie Poli</full-name>
+        <bought-cars>2</bought-cars>
+        <spent-money>12138.28</spent-money>
+    </customer>
+    <customer>
+        <id>20</id>
+        <full-name>Nisha Markwell</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>12031.40</spent-money>
+    </customer>
+    <customer>
+        <id>24</id>
+        <full-name>Jimmy Grossi</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>10370.53</spent-money>
+    </customer>
+    <customer>
+        <id>9</id>
+        <full-name>Johnette Derryberry</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>11148.37</spent-money>
+    </customer>
+    <customer>
+        <id>14</id>
+        <full-name>Brett Brickley</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>9783.76</spent-money>
+    </customer>
+    <customer>
+        <id>1</id>
+        <full-name>Emmitt Benally</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>8518.20</spent-money>
+    </customer>
+    <customer>
+        <id>8</id>
+        <full-name>Teddy Hobby</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>6932.22</spent-money>
+    </customer>
+    <customer>
+        <id>11</id>
+        <full-name>Francis Mckim</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>8325.28</spent-money>
+    </customer>
+    <customer>
+        <id>27</id>
+        <full-name>Garret Capron</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>7887.03</spent-money>
+    </customer>
+    <customer>
+        <id>6</id>
+        <full-name>Lino Subia</full-name>
+        <bought-cars>1</bought-cars>
+        <spent-money>1640.58</spent-money>
+    </customer>
+</customers>

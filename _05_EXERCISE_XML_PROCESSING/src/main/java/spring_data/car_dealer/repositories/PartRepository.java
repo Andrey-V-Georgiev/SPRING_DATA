@@ -19,4 +19,12 @@ public interface PartRepository extends JpaRepository<Part, Long> {
             " JOIN p.cars AS c " +
             " WHERE c.id = ?1 ")
     List<PartExportDto> findPartsAllPerCarId(Long carId);
+
+    @Query(value = " select *" +
+            " from parts as p" +
+            " join cars_parts as cp on p.id = cp.parts_id" +
+            " join cars as c on cp.cars_id = c.id" +
+            " where c.id in(?1)" +
+            " group by p.id", nativeQuery = true)
+    List<Part> findPartsByArrOfCarIds(List<Long> ids);
 }

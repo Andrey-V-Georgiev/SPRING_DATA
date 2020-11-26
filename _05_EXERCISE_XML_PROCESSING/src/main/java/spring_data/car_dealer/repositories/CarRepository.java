@@ -31,4 +31,12 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             " c.travelledDistance) " +
             " FROM Car AS c")
     List<CarExportDto2> findAllCarExportDto2();
+
+    @Query(value = "  select ca.*" +
+            " from customers as cu" +
+            " inner join sales as s on cu.id = s.customer_id" +
+            " inner join cars as ca on s.car_id = ca.id" +
+            " where cu.id = ?1" +
+            " group by cu.id, ca.id ", nativeQuery = true)
+    List<Car> findCarsBoughtByCustomer(Long customerId);
 }

@@ -37,6 +37,7 @@ public class AppController implements CommandLineRunner {
         //this.customerService.exportOrderedCustomers(GlobalConstants.QUERY_1_FILE_PATH);
         //this.carService.exportCarsFromMake(GlobalConstants.QUERY_2_FILE_PATH, "Toyota");
         //this.supplierService.exportLocalSuppliers(GlobalConstants.QUERY_3_FILE_PATH);
-        this.carService.exportCarsWithTheirListOfParts(GlobalConstants.QUERY_4_FILE_PATH);
+        // this.carService.exportCarsWithTheirListOfParts(GlobalConstants.QUERY_4_FILE_PATH);
+        this.customerService.exportTotalSalesByCustomer(GlobalConstants.QUERY_5_FILE_PATH);
     }
 }

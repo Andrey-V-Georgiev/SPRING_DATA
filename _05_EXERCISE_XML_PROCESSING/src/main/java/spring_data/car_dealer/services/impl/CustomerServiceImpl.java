@@ -4,23 +4,33 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring_data.car_dealer.models.dtos.exportdtos.CustomerExportDto;
+import spring_data.car_dealer.models.dtos.exportdtos.CustomerExportDto2;
 import spring_data.car_dealer.models.dtos.exportdtos.CustomersExportRootDto;
+import spring_data.car_dealer.models.dtos.exportdtos.CustomersExportRootDto2;
 import spring_data.car_dealer.models.dtos.importdtos.CustomerSeedDto;
 import spring_data.car_dealer.models.dtos.importdtos.CustomerSeedRootDto;
+import spring_data.car_dealer.models.entities.BaseEntity;
+import spring_data.car_dealer.models.entities.Car;
 import spring_data.car_dealer.models.entities.Customer;
+import spring_data.car_dealer.models.entities.Part;
+import spring_data.car_dealer.repositories.CarRepository;
 import spring_data.car_dealer.repositories.CustomerRepository;
+import spring_data.car_dealer.repositories.PartRepository;
 import spring_data.car_dealer.services.CustomerService;
 import spring_data.car_dealer.services.RandomService;
 import spring_data.car_dealer.utils.ValidationUtil;
 import spring_data.car_dealer.utils.XmlParser;
 
+import javax.transaction.Transactional;
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     private final XmlParser xmlParser;
@@ -28,14 +38,18 @@ public class CustomerServiceImpl implements CustomerService {
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
     private final RandomService randomService;
+    private final CarRepository carRepository;
+    private final PartRepository partRepository;
 
     @Autowired
-    public CustomerServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, CustomerRepository customerRepository, RandomService randomService) {
+    public CustomerServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, CustomerRepository customerRepository, RandomService randomService, CarRepository carRepository, PartRepository partRepository) {
         this.xmlParser = xmlParser;
         this.validationUtil = validationUtil;
         this.modelMapper = modelMapper;
         this.customerRepository = customerRepository;
         this.randomService = randomService;
+        this.carRepository = carRepository;
+        this.partRepository = partRepository;
     }
 
     @Override
@@ -85,5 +99,29 @@ public class CustomerServiceImpl implements CustomerService {
         CustomersExportRootDto customersExportRootDto = new CustomersExportRootDto();
         customersExportRootDto.setCustomers(customerExportDtos);
         this.xmlParser.marshalToFile(filePath, customersExportRootDto);
+    }
+
+    @Override
+    public void exportTotalSalesByCustomer(String filePath) throws JAXBException {
+        List<CustomerExportDto2> customerExportDtos2 = this.customerRepository.findCustomersBoughtAtLeastOneCar();
+        for (CustomerExportDto2 c : customerExportDtos2) {
+            List<Car> carsBoughtByCustomer = this.carRepository.findCarsBoughtByCustomer(c.getId());
+            c.setBoughtCars((long) carsBoughtByCustomer.size());
+            List<Long> carIds = carsBoughtByCustomer
+                    .stream()
+                    .map(BaseEntity::getId)
+                    .collect(Collectors.toList());
+            List<Part> partsBoughtByCustomer = this.partRepository.findPartsByArrOfCarIds(carIds);
+            BigDecimal totalMoney = partsBoughtByCustomer
+                    .stream()
+                    .map(Part::getPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            c.setSpentMoney(totalMoney);
+        }
+
+        CustomersExportRootDto2 customersExportRootDto2 = new CustomersExportRootDto2();
+        customersExportRootDto2.setCustomers(customerExportDtos2);
+        this.xmlParser.marshalToFile(filePath, customersExportRootDto2);
+
     }
 }

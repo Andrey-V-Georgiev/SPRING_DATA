@@ -12,4 +12,6 @@ public interface CustomerService {
     Customer getRandomCustomer();
 
     void exportOrderedCustomers(String filePath) throws JAXBException;
+
+    void exportTotalSalesByCustomer(String filePath) throws JAXBException;
 }

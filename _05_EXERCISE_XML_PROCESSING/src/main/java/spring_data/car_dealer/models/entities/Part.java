@@ -2,6 +2,7 @@ package spring_data.car_dealer.models.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
