@@ -11,13 +11,14 @@ import java.time.format.DateTimeFormatter;
 public class LocalDateTimeAdapterJSON  extends TypeAdapter<LocalDateTime> {
     @Override
     public void write(final JsonWriter jsonWriter, final LocalDateTime localDateTime ) throws IOException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = localDateTime.format(formatter);
-        jsonWriter.value(formattedDateTime);
+        jsonWriter.value(localDateTime.toString());
     }
 
     @Override
     public LocalDateTime read( final JsonReader jsonReader ) throws IOException {
-        return LocalDateTime.parse(jsonReader.nextString());
+
+        return LocalDateTime.from(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").parse(jsonReader.nextString())
+        );
     }
 }

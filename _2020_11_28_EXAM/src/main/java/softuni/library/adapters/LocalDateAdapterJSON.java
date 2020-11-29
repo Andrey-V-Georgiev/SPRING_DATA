@@ -17,7 +17,7 @@ public class LocalDateAdapterJSON extends TypeAdapter<LocalDate> {
     @Override
     public LocalDate read(final JsonReader jsonReader) throws IOException {
         return LocalDate.from(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonReader.nextString())
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").parse(jsonReader.nextString())
         );
     }
 }
