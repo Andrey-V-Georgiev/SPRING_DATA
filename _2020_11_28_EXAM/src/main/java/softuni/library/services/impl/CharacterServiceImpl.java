@@ -11,12 +11,14 @@ import softuni.library.models.entities.Character;
 import softuni.library.repositories.BookRepository;
 import softuni.library.repositories.CharacterRepository;
 import softuni.library.services.CharacterService;
+import softuni.library.utils.FileUtil;
 import softuni.library.utils.ValidationUtil;
 import softuni.library.utils.XmlParser;
 
 import javax.transaction.Transactional;
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +31,15 @@ public class CharacterServiceImpl implements CharacterService {
     private final ModelMapper modelMapper;
     private final CharacterRepository characterRepository;
     private final BookRepository bookRepository;
+    private final FileUtil fileUtil;
 
-    public CharacterServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, CharacterRepository characterRepository, BookRepository bookRepository) {
+    public CharacterServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, CharacterRepository characterRepository, BookRepository bookRepository, FileUtil fileUtil) {
         this.xmlParser = xmlParser;
         this.validationUtil = validationUtil;
         this.modelMapper = modelMapper;
         this.characterRepository = characterRepository;
         this.bookRepository = bookRepository;
+        this.fileUtil = fileUtil;
     }
 
     @Override
@@ -44,13 +48,9 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public String readCharactersFileContent() {
-        StringBuilder sb = new StringBuilder();
-        List<CharacterExportDto> charsByCriteria = this.characterRepository.findCharsByCriteria();
-        for (CharacterExportDto c : charsByCriteria) {
-            sb.append(String.format("Character name %s, age %d, in book %s%n", c.getName(), c.getAge(), c.getBookName()));
-        }
-        return sb.toString();
+    public String readCharactersFileContent() throws IOException {
+        String charactersFileContent = this.fileUtil.readFile(GlobalConstants.CHARACTERS_INPUT_PATH);
+        return charactersFileContent;
     }
 
     @Override
@@ -86,6 +86,11 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public String findCharactersInBookOrderedByLastNameDescendingThenByAge() {
-        return null;
+        List<CharacterExportDto> charsByCriteria = this.characterRepository.findCharsByCriteria();
+        StringBuilder sb = new StringBuilder();
+        charsByCriteria.forEach(c -> sb.append(
+                String.format("Character name %s, age %d, in book %s%n", c.getName(), c.getAge(), c.getBookName())));
+        String s = sb.toString();
+        return s;
     }
 }

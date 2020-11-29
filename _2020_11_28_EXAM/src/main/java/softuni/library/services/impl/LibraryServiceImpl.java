@@ -3,22 +3,21 @@ package softuni.library.services.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import softuni.library.constants.GlobalConstants;
-import softuni.library.models.dtos.CharacterDto;
-import softuni.library.models.dtos.CharacterRootDto;
 import softuni.library.models.dtos.LibraryDto;
 import softuni.library.models.dtos.LibraryRootDto;
 import softuni.library.models.entities.Book;
-import softuni.library.models.entities.Character;
 import softuni.library.models.entities.Library;
 import softuni.library.repositories.BookRepository;
 import softuni.library.repositories.LibraryRepository;
 import softuni.library.services.LibraryService;
+import softuni.library.utils.FileUtil;
 import softuni.library.utils.ValidationUtil;
 import softuni.library.utils.XmlParser;
 
 import javax.transaction.Transactional;
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +30,15 @@ public class LibraryServiceImpl implements LibraryService {
     private final ModelMapper modelMapper;
     private final LibraryRepository libraryRepository;
     private final BookRepository bookRepository;
+    private final FileUtil fileUtil;
 
-    public LibraryServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, LibraryRepository libraryRepository, BookRepository bookRepository) {
+    public LibraryServiceImpl(XmlParser xmlParser, ValidationUtil validationUtil, ModelMapper modelMapper, LibraryRepository libraryRepository, BookRepository bookRepository, FileUtil fileUtil) {
         this.xmlParser = xmlParser;
         this.validationUtil = validationUtil;
         this.modelMapper = modelMapper;
         this.libraryRepository = libraryRepository;
         this.bookRepository = bookRepository;
+        this.fileUtil = fileUtil;
     }
 
     @Override
@@ -46,8 +47,9 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public String readLibrariesFileContent() {
-        return null;
+    public String readLibrariesFileContent() throws IOException {
+        String librariesFileContent = this.fileUtil.readFile(GlobalConstants.LIBRARIES_INPUT_PATH);
+        return librariesFileContent;
     }
 
     @Override

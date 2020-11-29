@@ -2,9 +2,10 @@ package softuni.library.services;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public interface LibraryService {
     boolean areImported();
-    String readLibrariesFileContent();
+    String readLibrariesFileContent() throws IOException;
     String importLibraries() throws JAXBException, FileNotFoundException;
 }

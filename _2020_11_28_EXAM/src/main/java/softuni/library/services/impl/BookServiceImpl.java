@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Set;
 
 @Service
@@ -48,8 +49,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String readBooksFileContent() {
-        return null;
+    public String readBooksFileContent() throws IOException {
+        String booksFileContent = this.fileUtil.readFile(GlobalConstants.BOOKS_INPUT_PATH);
+        return booksFileContent;
     }
 
     @Override

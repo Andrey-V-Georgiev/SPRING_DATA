@@ -15,6 +15,7 @@ import softuni.library.utils.ValidationUtil;
 import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 @Service
 @Transactional
@@ -43,8 +44,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public String readAuthorsFileContent() {
-        return null;
+    public String readAuthorsFileContent() throws IOException {
+        String authorsFileContent = this.fileUtil.readFile(GlobalConstants.AUTHORS_INPUT_PATH);
+        return authorsFileContent;
     }
 
     @Override
@@ -71,6 +73,7 @@ public class AuthorServiceImpl implements AuthorService {
                 sb.append("Invalid Author%n");
             }
         }
-        return sb.toString();
+        String s = sb.toString();
+        return s;
     }
 }
