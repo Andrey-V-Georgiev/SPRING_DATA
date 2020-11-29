@@ -1,12 +1,13 @@
 package softuni.exam.repository;
 
-//ToDo
-public interface PictureRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import softuni.exam.models.entities.Picture;
 
-    interface RandomUtil {
-        /* return int from zero to given border*/
-        int getRandomId(int upperBorder);
-        /* return int from one to given border*/
-        int getRandomInt(int lowerBorder, int upperBorder);
-    }
+import java.util.Optional;
+
+@Repository
+public interface PictureRepository extends JpaRepository<Picture, Long> {
+
+    Optional<Picture> findPictureByName(String name);
 }

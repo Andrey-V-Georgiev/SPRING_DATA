@@ -17,6 +17,14 @@ public class FileUtilImpl implements FileUtil {
         return Files.readAllLines(Paths.get(filePath))
                 .stream()
                 .filter(x -> !x.isEmpty())
+                .collect(Collectors.joining(""));
+    }
+
+    @Override
+    public String readFileAddedNewLines(String filePath) throws IOException {
+        return Files.readAllLines(Paths.get(filePath))
+                .stream()
+                .filter(x -> !x.isEmpty())
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 

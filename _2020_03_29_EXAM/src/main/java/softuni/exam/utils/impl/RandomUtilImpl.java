@@ -2,7 +2,7 @@ package softuni.exam.utils.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import softuni.library.utils.RandomUtil;
+import softuni.exam.utils.RandomUtil;
 
 import java.util.Random;
 
