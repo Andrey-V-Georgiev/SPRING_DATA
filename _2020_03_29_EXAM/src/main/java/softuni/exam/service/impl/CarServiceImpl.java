@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import softuni.exam.constants.GlobalConstants;
 import softuni.exam.models.dtos.carDtos.CarSeedDto;
+import softuni.exam.models.dtos.carDtos.CarViewDto;
 import softuni.exam.models.entities.Car;
 import softuni.exam.repository.CarRepository;
 import softuni.exam.service.CarService;
@@ -14,6 +15,7 @@ import softuni.exam.utils.ValidationUtil;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,7 +74,16 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public String getCarsOrderByPicturesCountThenByMake() {
-        return null;
+        List<CarViewDto> carViewDtos = this.carRepository.getCarsOrderByPicturesCountThenByMake();
+        StringBuilder sb = new StringBuilder();
+        for (CarViewDto dto : carViewDtos) {
+            sb.append(String.format("Car make - %s, model - %s%n", dto.getMake(), dto.getModel()));
+            sb.append(String.format("\tKilometers - %d%n", dto.getKilometers()));
+            sb.append(String.format("\tRegistered on - %s%n", dto.getRegisteredOn()));
+            sb.append(String.format("\tNumber of pictures - %d%n", dto.getNumberOfPictures()));
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 
     @Override

@@ -35,7 +35,6 @@ public class OfferServiceImpl implements OfferService {
     private final CarService carService;
     private final SellerService sellerService;
 
-
     @Autowired
     public OfferServiceImpl(XmlParser xmlParser, ModelMapper modelMapper, ValidationUtil validationUtil, FileUtil fileUtil, OfferRepository offerRepository, CarService carService, SellerService sellerService) {
         this.xmlParser = xmlParser;
@@ -46,7 +45,6 @@ public class OfferServiceImpl implements OfferService {
         this.carService = carService;
         this.sellerService = sellerService;
     }
-
 
     @Override
     public boolean areImported() {
