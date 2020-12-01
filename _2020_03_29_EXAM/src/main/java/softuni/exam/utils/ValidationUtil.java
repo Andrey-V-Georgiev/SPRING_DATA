@@ -1,4 +1,4 @@
-package softuni.exam.utils;
+package softuni.car_dealer_exam.utils;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;

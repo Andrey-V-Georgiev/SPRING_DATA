@@ -1,4 +1,4 @@
-package softuni.exam.models.dtos.pictureDtos;
+package softuni.car_dealer_exam.models.dtos.pictureDtos;
 
 import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;

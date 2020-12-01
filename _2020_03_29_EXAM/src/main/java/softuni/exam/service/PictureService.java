@@ -1,4 +1,4 @@
-package softuni.exam.service;
+package softuni.car_dealer_exam.service;
 
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package softuni.exam.web.controllers;
+package softuni.car_dealer_exam.web.controllers;
 
 import org.springframework.web.servlet.ModelAndView;
 

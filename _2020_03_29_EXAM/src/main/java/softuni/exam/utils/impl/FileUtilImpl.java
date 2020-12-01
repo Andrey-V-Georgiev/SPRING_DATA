@@ -1,7 +1,7 @@
-package softuni.exam.utils.impl;
+package softuni.car_dealer_exam.utils.impl;
 
 import org.springframework.stereotype.Component;
-import softuni.exam.utils.FileUtil;
+import softuni.car_dealer_exam.utils.FileUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

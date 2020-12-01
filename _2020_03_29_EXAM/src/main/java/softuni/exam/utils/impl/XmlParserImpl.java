@@ -1,7 +1,7 @@
-package softuni.exam.utils.impl;
+package softuni.car_dealer_exam.utils.impl;
 
 import org.springframework.stereotype.Component;
-import softuni.exam.utils.XmlParser;
+import softuni.car_dealer_exam.utils.XmlParser;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

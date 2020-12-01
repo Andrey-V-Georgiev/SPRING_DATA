@@ -1,4 +1,4 @@
-package softuni.exam.web.controllers;
+package softuni.car_dealer_exam.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import softuni.exam.service.CarService;
-import softuni.exam.service.OfferService;
-import softuni.exam.service.PictureService;
-import softuni.exam.service.SellerService;
+import softuni.car_dealer_exam.service.OfferService;
+import softuni.car_dealer_exam.service.PictureService;
+import softuni.car_dealer_exam.service.CarService;
+import softuni.car_dealer_exam.service.SellerService;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;

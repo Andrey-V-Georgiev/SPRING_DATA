@@ -1,4 +1,4 @@
-package softuni.exam.models.dtos.sellerDtos;
+package softuni.car_dealer_exam.models.dtos.sellerDtos;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

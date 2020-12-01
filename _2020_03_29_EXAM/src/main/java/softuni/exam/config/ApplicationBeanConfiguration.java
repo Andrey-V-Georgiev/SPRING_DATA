@@ -1,16 +1,16 @@
-package softuni.exam.config;
+package softuni.car_dealer_exam.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import softuni.exam.adapters.LocalDateAdapterJSON;
-import softuni.exam.adapters.LocalDateTimeAdapterJSON;
-import softuni.exam.utils.ValidationUtil;
-import softuni.exam.utils.XmlParser;
-import softuni.exam.utils.impl.ValidationUtilImpl;
-import softuni.exam.utils.impl.XmlParserImpl;
+import softuni.car_dealer_exam.adapters.LocalDateAdapterJSON;
+import softuni.car_dealer_exam.adapters.LocalDateTimeAdapterJSON;
+import softuni.car_dealer_exam.utils.ValidationUtil;
+import softuni.car_dealer_exam.utils.XmlParser;
+import softuni.car_dealer_exam.utils.impl.ValidationUtilImpl;
+import softuni.car_dealer_exam.utils.impl.XmlParserImpl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

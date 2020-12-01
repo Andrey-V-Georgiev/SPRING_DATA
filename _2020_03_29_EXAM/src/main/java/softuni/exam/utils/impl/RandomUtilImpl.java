@@ -1,8 +1,8 @@
-package softuni.exam.utils.impl;
+package softuni.car_dealer_exam.utils.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import softuni.exam.utils.RandomUtil;
+import softuni.car_dealer_exam.utils.RandomUtil;
 
 import java.util.Random;
 

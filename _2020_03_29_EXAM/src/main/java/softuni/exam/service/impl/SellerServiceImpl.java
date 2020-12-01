@@ -1,17 +1,17 @@
-package softuni.exam.service.impl;
+package softuni.car_dealer_exam.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import softuni.exam.constants.GlobalConstants;
-import softuni.exam.models.dtos.sellerDtos.SellerSeedDto;
-import softuni.exam.models.dtos.sellerDtos.SellerSeedRootDto;
-import softuni.exam.models.entities.Seller;
-import softuni.exam.repository.SellerRepository;
-import softuni.exam.service.SellerService;
-import softuni.exam.utils.FileUtil;
-import softuni.exam.utils.ValidationUtil;
-import softuni.exam.utils.XmlParser;
+import softuni.car_dealer_exam.constants.GlobalConstants;
+import softuni.car_dealer_exam.models.dtos.sellerDtos.SellerSeedDto;
+import softuni.car_dealer_exam.models.dtos.sellerDtos.SellerSeedRootDto;
+import softuni.car_dealer_exam.models.entities.Seller;
+import softuni.car_dealer_exam.repository.SellerRepository;
+import softuni.car_dealer_exam.utils.FileUtil;
+import softuni.car_dealer_exam.utils.ValidationUtil;
+import softuni.car_dealer_exam.utils.XmlParser;
+import softuni.car_dealer_exam.service.SellerService;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;

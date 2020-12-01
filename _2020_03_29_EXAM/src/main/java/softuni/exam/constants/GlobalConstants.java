@@ -1,4 +1,4 @@
-package softuni.exam.constants;
+package softuni.car_dealer_exam.constants;
 
 public class GlobalConstants {
 

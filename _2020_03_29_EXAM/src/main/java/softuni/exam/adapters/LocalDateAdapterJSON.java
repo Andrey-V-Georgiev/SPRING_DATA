@@ -1,4 +1,4 @@
-package softuni.exam.adapters;
+package softuni.car_dealer_exam.adapters;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

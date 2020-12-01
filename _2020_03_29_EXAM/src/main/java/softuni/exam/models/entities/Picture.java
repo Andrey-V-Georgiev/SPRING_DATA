@@ -1,7 +1,6 @@
-package softuni.exam.models.entities;
+package softuni.car_dealer_exam.models.entities;
 
 import org.hibernate.validator.constraints.Length;
-import softuni.exam.enumerations.Rating;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

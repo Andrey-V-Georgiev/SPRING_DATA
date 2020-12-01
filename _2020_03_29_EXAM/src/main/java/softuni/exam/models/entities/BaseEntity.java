@@ -1,4 +1,4 @@
-package softuni.exam.models.entities;
+package softuni.car_dealer_exam.models.entities;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

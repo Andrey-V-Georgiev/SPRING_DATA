@@ -1,18 +1,18 @@
-package softuni.exam.service.impl;
+package softuni.car_dealer_exam.service.impl;
 
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import softuni.exam.constants.GlobalConstants;
-import softuni.exam.models.dtos.pictureDtos.PictureSeedDto;
-import softuni.exam.models.entities.Car;
-import softuni.exam.models.entities.Picture;
-import softuni.exam.repository.PictureRepository;
-import softuni.exam.service.CarService;
-import softuni.exam.service.PictureService;
-import softuni.exam.utils.FileUtil;
-import softuni.exam.utils.ValidationUtil;
+import softuni.car_dealer_exam.constants.GlobalConstants;
+import softuni.car_dealer_exam.models.dtos.pictureDtos.PictureSeedDto;
+import softuni.car_dealer_exam.models.entities.Car;
+import softuni.car_dealer_exam.models.entities.Picture;
+import softuni.car_dealer_exam.repository.PictureRepository;
+import softuni.car_dealer_exam.service.CarService;
+import softuni.car_dealer_exam.service.PictureService;
+import softuni.car_dealer_exam.utils.FileUtil;
+import softuni.car_dealer_exam.utils.ValidationUtil;
 
 import javax.transaction.Transactional;
 import java.io.IOException;

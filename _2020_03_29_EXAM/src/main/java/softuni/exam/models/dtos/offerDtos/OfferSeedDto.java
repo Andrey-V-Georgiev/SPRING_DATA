@@ -1,7 +1,7 @@
-package softuni.exam.models.dtos.offerDtos;
+package softuni.car_dealer_exam.models.dtos.offerDtos;
 
 import org.hibernate.validator.constraints.Length;
-import softuni.exam.adapters.LocalDateTimeAdapterXML;
+import softuni.car_dealer_exam.adapters.LocalDateTimeAdapterXML;
 
 import javax.validation.constraints.DecimalMin;
 import javax.xml.bind.annotation.XmlAccessType;

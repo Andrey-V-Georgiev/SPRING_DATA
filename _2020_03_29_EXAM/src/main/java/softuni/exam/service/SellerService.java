@@ -1,6 +1,6 @@
-package softuni.exam.service;
+package softuni.car_dealer_exam.service;
 
-import softuni.exam.models.entities.Seller;
+import softuni.car_dealer_exam.models.entities.Seller;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;

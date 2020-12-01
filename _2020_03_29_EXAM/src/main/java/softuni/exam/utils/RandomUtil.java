@@ -1,4 +1,4 @@
-package softuni.exam.utils;
+package softuni.car_dealer_exam.utils;
 
 public interface RandomUtil {
     /* return int from zero to given border*/

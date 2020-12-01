@@ -1,7 +1,7 @@
-package softuni.exam.utils.impl;
+package softuni.car_dealer_exam.utils.impl;
 
 import org.springframework.stereotype.Component;
-import softuni.exam.utils.ValidationUtil;
+import softuni.car_dealer_exam.utils.ValidationUtil;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

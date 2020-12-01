@@ -1,4 +1,4 @@
-package softuni.exam.adapters;
+package softuni.car_dealer_exam.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDateTime;
