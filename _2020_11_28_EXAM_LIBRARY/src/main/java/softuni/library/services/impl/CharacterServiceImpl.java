@@ -49,8 +49,8 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public String readCharactersFileContent() throws IOException {
-        String charactersFileContent = this.fileUtil.readFile(GlobalConstants.CHARACTERS_INPUT_PATH);
-        return charactersFileContent;
+        String inputString = this.fileUtil.readFile(GlobalConstants.CHARACTERS_INPUT_PATH);
+        return inputString;
     }
 
     @Override
@@ -58,27 +58,28 @@ public class CharacterServiceImpl implements CharacterService {
         StringBuilder sb = new StringBuilder();
 
         /* Parse the XMLs to Dtos */
-        CharacterRootDto characterRootDto = this.xmlParser
+        CharacterRootDto rootDto = this.xmlParser
                 .unmarshalFromFile(GlobalConstants.CHARACTERS_INPUT_PATH, CharacterRootDto.class);
 
         /* Validate the Dtos */
-        List<CharacterDto> characterDtos = characterRootDto.getCharacters();
-        for (CharacterDto dto : characterDtos) {
+        List<CharacterDto> dtos = rootDto.getCharacters();
+        for (CharacterDto dto : dtos) {
             if (this.validationUtil.isValid(dto)) {
 
+                /* Prevent duplicates */
                 Optional<Character> characterOptional = this.characterRepository
                         .findCharacterByFirstNameAndLastName(dto.getFirstName(), dto.getLastName());
+
                 if (characterOptional.isEmpty()) {
                     Character character = this.modelMapper.map(dto, Character.class);
                     Book bookById = this.bookRepository.findBookById(dto.getBook().getId());
                     character.setBook(bookById);
+
                     this.characterRepository.saveAndFlush(character);
-                    sb.append("Successfully added %n");
-                } else {
-                    System.out.println("Character");
+                    sb.append("Successfully added \n");
                 }
             } else {
-                sb.append("Invalid Character%n");
+                sb.append("Invalid Character\n");
             }
         }
         return sb.toString();

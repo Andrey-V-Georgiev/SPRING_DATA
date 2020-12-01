@@ -19,6 +19,7 @@ import javax.validation.ConstraintViolation;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -50,34 +51,38 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String readBooksFileContent() throws IOException {
-        String booksFileContent = this.fileUtil.readFile(GlobalConstants.BOOKS_INPUT_PATH);
-        return booksFileContent;
+        String inputString = this.fileUtil.readFile(GlobalConstants.BOOKS_INPUT_PATH);
+        return inputString;
     }
 
     @Override
     public String importBooks() throws FileNotFoundException {
         StringBuilder sb = new StringBuilder();
 
-        BookDto[] dtos = this.gson.fromJson(new FileReader(GlobalConstants.BOOKS_INPUT_PATH), BookDto[].class);
+        /* Parse the JSON to dtos */
+        BookDto[] dtos = this.gson.fromJson(
+                new FileReader(GlobalConstants.BOOKS_INPUT_PATH), BookDto[].class);
 
+        /* Validate dtos */
         for (BookDto dto : dtos) {
-            Book authorFromDb = this.bookRepository
-                    .findBookByNameAndEdition(dto.getName(), dto.getEdition());
-            if (authorFromDb != null) {
-                continue;
-            }
-            /* Validate the dtos */
-            if (this.validationUtil.isValid(dto)) {
-                Book book = this.modelMapper.map(dto, Book.class);
-                Author authorById = this.authorRepository.findAuthorById(dto.getAuthor());
-                book.setAuthor(authorById);
 
-                this.bookRepository.saveAndFlush(book);
-                sb.append(String.format(
-                        "Successfully imported Book: %s written in %s%n",  dto.getName(), dto.getWritten()));
-            } else {
-                Set<ConstraintViolation<BookDto>> violations = this.validationUtil.violations(dto);
-                sb.append("Invalid Book%n");
+            /* Prevent duplicates */
+            Optional<Book> authorOptional = this.bookRepository
+                    .findBookByNameAndEdition(dto.getName(), dto.getEdition());
+
+            if (authorOptional.isEmpty()) {
+                if (this.validationUtil.isValid(dto)) {
+                    Book book = this.modelMapper.map(dto, Book.class);
+                    Author authorById = this.authorRepository.findAuthorById(dto.getAuthor());
+                    book.setAuthor(authorById);
+
+                    this.bookRepository.saveAndFlush(book);
+                    sb.append(String.format("Successfully imported Book: %s written in %s%n",
+                            dto.getName(), dto.getWritten()));
+                } else {
+                    Set<ConstraintViolation<BookDto>> violations = this.validationUtil.violations(dto);
+                    sb.append("Invalid Book%n");
+                }
             }
         }
         return sb.toString();

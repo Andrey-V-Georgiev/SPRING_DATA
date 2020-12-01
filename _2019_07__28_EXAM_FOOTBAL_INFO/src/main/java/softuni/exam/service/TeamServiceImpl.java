@@ -44,12 +44,12 @@ public class TeamServiceImpl implements TeamService {
         StringBuilder sb = new StringBuilder();
 
         /* Parse the XMLs to Dtos */
-        TeamSeedRootDto teamSeedRootDto = this.xmlParser
+        TeamSeedRootDto rootDto = this.xmlParser
                 .unmarshalFromFile(GlobalConstants.TEAMS_INPUT_PATH, TeamSeedRootDto.class);
 
         /* Validate the Dtos */
-        List<TeamSeedDto> teamSeedDtos = teamSeedRootDto.getTeams();
-        for (TeamSeedDto dto : teamSeedDtos) {
+        List<TeamSeedDto> dtos = rootDto.getTeams();
+        for (TeamSeedDto dto : dtos) {
             if (this.validationUtil.isValid(dto)) {
 
                 Optional<Team> teamOptional = this.teamRepository.findTeamByName(dto.getName());
@@ -72,7 +72,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public String readTeamsXmlFile() throws IOException {
-        String teamsXML = this.fileUtil.readFileAddedNewLines(GlobalConstants.TEAMS_INPUT_PATH);
-        return teamsXML;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.TEAMS_INPUT_PATH);
+        return inputString;
     }
 }

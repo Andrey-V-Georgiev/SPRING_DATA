@@ -42,15 +42,19 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String importPlayers() throws IOException {
-        /* Get the JSON */
-        String playersJson = this.fileUtil.readFileAddedNewLines(GlobalConstants.PLAYERS_INPUT_PATH);
-        /* Turn it to dtos */
-        PlayerSeedDto[] playerSeedDtos = this.gson.fromJson(playersJson, PlayerSeedDto[].class);
         StringBuilder sb = new StringBuilder();
-        for (PlayerSeedDto dto : playerSeedDtos) {
+
+        /* Parse the JSON to Dto */
+        String playersJson = this.fileUtil.readFileAddedNewLines(GlobalConstants.PLAYERS_INPUT_PATH);
+        PlayerSeedDto[] dtos = this.gson.fromJson(playersJson, PlayerSeedDto[].class);
+
+        /* Validate the Dtos */
+        for (PlayerSeedDto dto : dtos) {
+
+            /* Prevent duplicates */
             Optional<Player> playerOptional = this.playerRepository
                     .findPlayerByFirstNameAndLastNameAndNumber(dto.getFirstName(), dto.getLastName(), dto.getNumber());
-            /* If no present in DB */
+
             if (playerOptional.isEmpty()) {
                 if (this.validationUtil.isValid(dto)) {
                     Player player = this.modelMapper.map(dto, Player.class);
@@ -73,8 +77,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String readPlayersJsonFile() throws IOException {
-        String playersJson = this.fileUtil.readFileAddedNewLines(GlobalConstants.PLAYERS_INPUT_PATH);
-        return playersJson;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.PLAYERS_INPUT_PATH);
+        return inputString;
     }
 
     @Override

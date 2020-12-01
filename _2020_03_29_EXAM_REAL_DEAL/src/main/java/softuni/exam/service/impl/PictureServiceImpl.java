@@ -46,29 +46,30 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public String readPicturesFromFile() throws IOException {
-        String picturesJson = this.fileUtil.readFileAddedNewLines(GlobalConstants.PICTURES_INPUT_PATH);
-        return picturesJson;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.PICTURES_INPUT_PATH);
+        return inputString;
     }
 
     @Override
     public String importPictures() throws IOException {
-        /* Get the JSON */
-        String picturesJson = this.readPicturesFromFile();
-        /* Turn it to dtos */
-        PictureSeedDto[] pictureSeedDtos = this.gson.fromJson(picturesJson, PictureSeedDto[].class);
         StringBuilder sb = new StringBuilder();
-        for (PictureSeedDto dto : pictureSeedDtos) {
-            Optional<Picture> pictureOptional = this.pictureRepository.findPictureByName(dto.getName());
-            /* If no present in DB */
+        /* Get the JSON */
+        String inputString = this.readPicturesFromFile();
+        /* Turn it to dtos */
+        PictureSeedDto[] dtos = this.gson.fromJson(inputString, PictureSeedDto[].class);
+        for (PictureSeedDto dto : dtos) {
+            /* Prevent duplicates */
+            Optional<Picture> pictureOptional = this.pictureRepository
+                    .findPictureByName(dto.getName());
             if(pictureOptional.isEmpty()) {
                 if (this.validationUtil.isValid(dto)) {
                     Picture picture = this.modelMapper.map(dto, Picture.class);
                     Car carById = this.carService.findCarById(dto.getCar());
                     picture.setCar(carById);
                     this.pictureRepository.saveAndFlush(picture);
-                    sb.append(String.format("Successfully imported picture - %s%n", dto.getName()));
+                    sb.append(String.format("Successfully imported picture - %s\n", dto.getName()));
                 } else {
-                    sb.append("Invalid picture");
+                    sb.append("Invalid picture\n");
                 }
             }
         }

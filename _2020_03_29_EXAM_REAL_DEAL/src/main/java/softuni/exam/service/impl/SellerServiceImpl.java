@@ -51,26 +51,23 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public String importSellers() throws IOException, JAXBException {
         StringBuilder sb = new StringBuilder();
-
         /* Parse the XMLs to Dtos */
         SellerSeedRootDto sellerSeedRootDto = this.xmlParser
                 .unmarshalFromFile(GlobalConstants.SELLERS_INPUT_PATH, SellerSeedRootDto.class);
-
         /* Validate the Dtos */
-        List<SellerSeedDto> sellerSeedDtos = sellerSeedRootDto.getSellers();
-        for (SellerSeedDto dto : sellerSeedDtos) {
+        List<SellerSeedDto> dtos = sellerSeedRootDto.getSellers();
+        for (SellerSeedDto dto : dtos) {
             if (this.validationUtil.isValid(dto)) {
-
+                /* Prevent duplicates */
                 Optional<Seller> sellerOptional = this.sellerRepository
                         .findSellerByFirstNameAndLastNameAndEmail(dto.getFirstName(), dto.getLastName(), dto.getEmail());
-
                 if (sellerOptional.isEmpty()) {
                     Seller seller = this.modelMapper.map(dto, Seller.class);
                     this.sellerRepository.saveAndFlush(seller);
-                    sb.append(String.format("Successfully added seller %s, %s%n", dto.getLastName(), dto.getEmail()));
+                    sb.append(String.format("Successfully added seller %s, %s\n", dto.getLastName(), dto.getEmail()));
                 }
             } else {
-                sb.append("Invalid Character%n");
+                sb.append("Invalid Character\n");
             }
         }
         return sb.toString();

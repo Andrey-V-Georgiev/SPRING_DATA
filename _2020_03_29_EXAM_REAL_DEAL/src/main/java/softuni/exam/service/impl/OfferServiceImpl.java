@@ -53,18 +53,19 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public String readOffersFileContent() throws IOException {
-        String offersJson = this.fileUtil.readFileAddedNewLines(GlobalConstants.OFFERS_INPUT_PATH);
-        return offersJson;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.OFFERS_INPUT_PATH);
+        return inputString;
     }
 
     @Override
     public String importOffers() throws IOException, JAXBException {
         StringBuilder sb = new StringBuilder();
         /* Parse the XMLs to Dtos */
-        OfferSeedRootDto offerSeedRootDto = this.xmlParser
+        OfferSeedRootDto rootDto = this.xmlParser
                 .unmarshalFromFile(GlobalConstants.OFFERS_INPUT_PATH, OfferSeedRootDto.class);
-        List<OfferSeedDto> offerSeedDtos = offerSeedRootDto.getOffers();
-        for (OfferSeedDto dto : offerSeedDtos) {
+
+        List<OfferSeedDto> dtos = rootDto.getOffers();
+        for (OfferSeedDto dto : dtos) {
             if (this.validationUtil.isValid(dto)) {
                 /* Prevent duplicates */
                 Optional<Offer> offerOptional = this.offerRepository
@@ -79,10 +80,10 @@ public class OfferServiceImpl implements OfferService {
                     offer.setSeller(sellerById);
                     /* Save entity to DB */
                     this.offerRepository.saveAndFlush(offer);
-                    sb.append(String.format("Successfully added offer %s%n", dto.getPrice()));
+                    sb.append(String.format("Successfully added offer %s\n", dto.getPrice()));
                 }
             } else {
-                sb.append("Invalid offer%n");
+                sb.append("Invalid offer\n");
             }
         }
         return sb.toString();

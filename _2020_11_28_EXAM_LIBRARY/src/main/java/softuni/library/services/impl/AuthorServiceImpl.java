@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -45,35 +46,37 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public String readAuthorsFileContent() throws IOException {
-        String authorsFileContent = this.fileUtil.readFile(GlobalConstants.AUTHORS_INPUT_PATH);
-        return authorsFileContent;
+        String inputString = this.fileUtil.readFile(GlobalConstants.AUTHORS_INPUT_PATH);
+        return inputString;
     }
 
     @Override
     public String importAuthors() throws FileNotFoundException {
         StringBuilder sb = new StringBuilder();
 
-        AuthorDto[] dtos = this.gson
-                .fromJson(new FileReader(GlobalConstants.AUTHORS_INPUT_PATH), AuthorDto[].class);
+        /* Parse the JSON to dtos */
+        AuthorDto[] dtos = this.gson.fromJson(
+                new FileReader(GlobalConstants.AUTHORS_INPUT_PATH), AuthorDto[].class);
 
+        /* Validate dtos */
         for (AuthorDto dto : dtos) {
-            Author authorFromDb = this.authorRepository
+
+            /* Prevent duplicates */
+            Optional<Author> authorOptional = this.authorRepository
                     .findAuthorByFirstNameAndLastName(dto.getFirstName(), dto.getLastName());
-            if (authorFromDb != null) {
-                continue;
-            }
-            /* Validate the dtos */
-            if (this.validationUtil.isValid(dto)) {
-                Author author = this.modelMapper.map(dto, Author.class);
-                this.authorRepository.saveAndFlush(author);
-                sb.append(String.format(
-                        "Successfully imported Author: %s %s - %s%n",
-                        dto.getFirstName(), dto.getLastName(), dto.getBirthTown()));
-            } else {
-                sb.append("Invalid Author%n");
+
+            if (authorOptional.isEmpty()) {
+                if (this.validationUtil.isValid(dto)) {
+                    Author author = this.modelMapper.map(dto, Author.class);
+
+                    this.authorRepository.saveAndFlush(author);
+                    sb.append(String.format("Successfully imported Author: %s %s - %s\n",
+                            dto.getFirstName(), dto.getLastName(), dto.getBirthTown()));
+                } else {
+                    sb.append("Invalid Author\n");
+                }
             }
         }
-        String s = sb.toString();
-        return s;
+        return sb.toString();
     }
 }

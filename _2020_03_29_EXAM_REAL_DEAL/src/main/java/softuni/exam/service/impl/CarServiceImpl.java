@@ -44,18 +44,18 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public String readCarsFileContent() throws IOException {
-        String carsJson = this.fileUtil.readFileAddedNewLines(GlobalConstants.CARS_INPUT_PATH);
-        return carsJson;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.CARS_INPUT_PATH);
+        return inputString;
     }
 
     @Override
     public String importCars() throws IOException {
-        /* Get the JSON */
-        String carsJson = this.readCarsFileContent();
-        /* Turn it to dtos */
-        CarSeedDto[] carSeedDtos = this.gson.fromJson(carsJson, CarSeedDto[].class);
         StringBuilder sb = new StringBuilder();
-        for (CarSeedDto dto : carSeedDtos) {
+        /* Get the JSON */
+        String inputString = this.readCarsFileContent();
+        /* Turn it to dtos */
+        CarSeedDto[] dtos = this.gson.fromJson(inputString, CarSeedDto[].class);
+        for (CarSeedDto dto : dtos) {
             Optional<Car> carOptional = this.carRepository
                     .findCarByMakeAndModelAndKilometers(dto.getMake(), dto.getModel(), dto.getKilometers());
             /* If no present in DB */
@@ -63,9 +63,9 @@ public class CarServiceImpl implements CarService {
                 if (this.validationUtil.isValid(dto)) {
                     Car car = this.modelMapper.map(dto, Car.class);
                     this.carRepository.saveAndFlush(car);
-                    sb.append(String.format("Successfully imported car - %s %s%n", dto.getMake(), dto.getModel()));
+                    sb.append(String.format("Successfully imported car - %s %s\n", dto.getMake(), dto.getModel()));
                 } else {
-                    sb.append("Invalid car");
+                    sb.append("Invalid car\n");
                 }
             }
         }

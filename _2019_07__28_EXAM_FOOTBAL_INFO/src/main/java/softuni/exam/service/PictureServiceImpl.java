@@ -41,14 +41,15 @@ public class PictureServiceImpl implements PictureService {
         StringBuilder sb = new StringBuilder();
 
         /* Parse the XMLs to Dtos */
-        PictureSeedRootDto pictureSeedRootDto = this.xmlParser
+        PictureSeedRootDto rootDto = this.xmlParser
                 .unmarshalFromFile(GlobalConstants.PICTURES_INPUT_PATH, PictureSeedRootDto.class);
 
         /* Validate the Dtos */
-        List<PictureSeedDto> pictureSeedDtos = pictureSeedRootDto.getPictures();
-        for (PictureSeedDto dto : pictureSeedDtos) {
+        List<PictureSeedDto> dtos = rootDto.getPictures();
+        for (PictureSeedDto dto : dtos) {
             if (this.validationUtil.isValid(dto)) {
 
+                /* Prevent duplicates */
                 Optional<Picture> pictureOptional = this.pictureRepository.findPictureByUrl(dto.getUrl());
                 if (pictureOptional.isEmpty()) {
                     Picture picture = this.modelMapper.map(dto, Picture.class);
@@ -69,7 +70,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public String readPicturesXmlFile() throws IOException {
-        String sellersXML = this.fileUtil.readFileAddedNewLines(GlobalConstants.PICTURES_INPUT_PATH);
-        return sellersXML;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.PICTURES_INPUT_PATH);
+        return inputString;
     }
 }

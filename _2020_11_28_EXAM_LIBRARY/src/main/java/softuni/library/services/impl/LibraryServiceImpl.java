@@ -48,8 +48,8 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public String readLibrariesFileContent() throws IOException {
-        String librariesFileContent = this.fileUtil.readFile(GlobalConstants.LIBRARIES_INPUT_PATH);
-        return librariesFileContent;
+        String inputString = this.fileUtil.readFile(GlobalConstants.LIBRARIES_INPUT_PATH);
+        return inputString;
     }
 
     @Override
@@ -57,31 +57,32 @@ public class LibraryServiceImpl implements LibraryService {
         StringBuilder sb = new StringBuilder();
 
         /* Parse the XMLs to Dtos */
-        LibraryRootDto libraryRootDto = this.xmlParser
+        LibraryRootDto rootDto = this.xmlParser
                 .unmarshalFromFile(GlobalConstants.LIBRARIES_INPUT_PATH, LibraryRootDto.class);
 
         /* Validate the Dtos */
-        List<LibraryDto> libraryDtos = libraryRootDto.getLibraries();
-        for (LibraryDto dto : libraryDtos) {
+        List<LibraryDto> dtos = rootDto.getLibraries();
+        for (LibraryDto dto : dtos) {
             if (this.validationUtil.isValid(dto)) {
 
+                /* Prevent duplicates */
                 Optional<Library> libraryOptional = this.libraryRepository
                         .findLibraryByNameAndLocation(dto.getName(), dto.getLocation());
+
                 if (libraryOptional.isEmpty()) {
                     Library library = this.modelMapper.map(dto, Library.class);
+
                     Book bookById = this.bookRepository.findBookById(dto.getBook().getId());
                     List<Book> libraryBooks = library.getBooks();
                     libraryBooks.add(bookById);
                     library.setBooks(libraryBooks);
+
                     this.libraryRepository.saveAndFlush(library);
-                    sb.append(String.format(
-                            "Successfully added Library: %s - %d %s %n",
+                    sb.append(String.format("Successfully added Library: %s - %d %s\n",
                             library.getName(), library.getRating(), library.getLocation()));
-                } else {
-                    System.out.println("Character");
                 }
             } else {
-                sb.append("Invalid Library%n");
+                sb.append("Invalid Library\n");
             }
         }
         return sb.toString();
