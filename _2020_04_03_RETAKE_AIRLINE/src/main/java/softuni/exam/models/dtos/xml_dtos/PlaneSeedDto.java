@@ -1,33 +1,35 @@
-package softuni.exam.models.entities;
+package softuni.exam.models.dtos.xml_dtos;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
-@Table(name = "planes", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"register_number"})
-})
-public class Plane extends BaseEntity {
+@XmlRootElement(name = "plane")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class PlaneSeedDto {
 
+    @XmlElement(name = "register-number")
     private String registerNumber;
+
+    @XmlElement(name = "capacity")
     private Integer capacity;
+
+    @XmlElement(name = "airline")
     private String airline;
 
-    public Plane() {
+    public PlaneSeedDto() {
     }
 
-    public Plane(String registerNumber, Integer capacity, String airline) {
+    public PlaneSeedDto(String registerNumber, Integer capacity, String airline) {
         this.registerNumber = registerNumber;
         this.capacity = capacity;
         this.airline = airline;
     }
 
-    @Column(name = "register_number")
     @Length(min = 5)
     public String getRegisterNumber() {
         return registerNumber;
@@ -37,7 +39,6 @@ public class Plane extends BaseEntity {
         this.registerNumber = registerNumber;
     }
 
-    @Column(name = "capacity")
     @Min(0)
     public Integer getCapacity() {
         return capacity;
@@ -47,7 +48,6 @@ public class Plane extends BaseEntity {
         this.capacity = capacity;
     }
 
-    @Column(name = "airline")
     @Length(min = 2)
     public String getAirline() {
         return airline;

@@ -5,7 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import softuni.exam.constants.GlobalConstants;
-import softuni.exam.models.dtos.jsondtos.PassengerSeedDto;
+import softuni.exam.models.dtos.export_dtos.PassengerExportDto;
+import softuni.exam.models.dtos.json_dtos.PassengerSeedDto;
 import softuni.exam.models.entities.Passenger;
 import softuni.exam.models.entities.Town;
 import softuni.exam.repository.PassengerRepository;
@@ -16,6 +17,7 @@ import softuni.exam.utils.ValidationUtil;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,14 +55,20 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public String importPassengers() throws IOException {
         StringBuilder sb = new StringBuilder();
+
         /* Get the JSON */
         String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.PASSENGERS_INPUT_PATH);
+
         /* Turn it to dtos */
         PassengerSeedDto[] dtos = this.gson.fromJson(inputString, PassengerSeedDto[].class);
+
         for (PassengerSeedDto dto : dtos) {
-            Optional<Passenger> passengerOptional = this.passengerRepository.findPassengerByEmail(dto.getEmail());
-            /* If no present in DB */
-            if(passengerOptional.isEmpty()) {
+
+            /* Prevent from duplicates */
+            Optional<Passenger> passengerOptional = this.passengerRepository
+                    .findPassengerByEmail(dto.getEmail());
+
+            if (passengerOptional.isEmpty()) {
                 if (this.validationUtil.isValid(dto)) {
                     Passenger passenger = this.modelMapper.map(dto, Passenger.class);
                     Town townByName = this.townService.findTownByName(dto.getTown());
@@ -77,7 +85,21 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
+    public Passenger findPassengerByEmail(String email) {
+        return this.passengerRepository.findPassengerByEmail(email).get();
+    }
+
+    @Override
     public String getPassengersOrderByTicketsCountDescendingThenByEmail() {
-        return null;
+        List<PassengerExportDto> passengerExportDtos = this.passengerRepository.findPassengers();
+        StringBuilder sb = new StringBuilder();
+        for (PassengerExportDto dto : passengerExportDtos) {
+            sb.append(String.format("Passenger %s  %s\n", dto.getFirstName(), dto.getLastName()));
+            sb.append(String.format("\tEmail - %s\n", dto.getEmail()));
+            sb.append(String.format("\tPhone - %s\n", dto.getPhoneNumber()));
+            sb.append(String.format("\tNumber of tickets - %d\n", dto.getNumberOfTickets()));
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 }

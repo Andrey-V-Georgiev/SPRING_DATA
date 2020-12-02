@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import softuni.exam.constants.GlobalConstants;
-import softuni.exam.models.dtos.jsondtos.TownSeedDto;
+import softuni.exam.models.dtos.json_dtos.TownSeedDto;
 import softuni.exam.models.entities.Town;
 import softuni.exam.repository.TownRepository;
 import softuni.exam.service.TownService;

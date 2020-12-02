@@ -1,5 +1,7 @@
 package softuni.exam.service;
 
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface TicketService {
@@ -8,6 +10,6 @@ public interface TicketService {
 
     String readTicketsFileContent() throws IOException;
 	
-	String importTickets();
+	String importTickets() throws JAXBException, FileNotFoundException;
 
 }

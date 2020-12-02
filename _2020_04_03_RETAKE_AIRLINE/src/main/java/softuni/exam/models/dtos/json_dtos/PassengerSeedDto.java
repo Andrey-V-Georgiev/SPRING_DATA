@@ -1,4 +1,4 @@
-package softuni.exam.models.dtos.jsondtos;
+package softuni.exam.models.dtos.json_dtos;
 
 import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;

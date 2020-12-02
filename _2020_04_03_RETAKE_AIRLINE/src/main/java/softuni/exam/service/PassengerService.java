@@ -1,6 +1,8 @@
 package softuni.exam.service;
 
 
+import softuni.exam.models.entities.Passenger;
+
 import java.io.IOException;
 
 public interface PassengerService {
@@ -10,6 +12,8 @@ public interface PassengerService {
     String readPassengersFileContent() throws IOException;
 	
 	String importPassengers() throws IOException;
+
+    Passenger findPassengerByEmail(String email);
 
 	String getPassengersOrderByTicketsCountDescendingThenByEmail();
 }
