@@ -44,8 +44,8 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public String readSellersFromFile() throws IOException {
-        String sellersXML = this.fileUtil.readFileAddedNewLines(GlobalConstants.SELLERS_INPUT_PATH);
-        return sellersXML;
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.SELLERS_INPUT_PATH);
+        return inputString;
     }
 
     @Override

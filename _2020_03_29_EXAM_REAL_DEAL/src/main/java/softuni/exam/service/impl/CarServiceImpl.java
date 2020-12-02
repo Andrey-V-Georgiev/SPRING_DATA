@@ -52,7 +52,7 @@ public class CarServiceImpl implements CarService {
     public String importCars() throws IOException {
         StringBuilder sb = new StringBuilder();
         /* Get the JSON */
-        String inputString = this.readCarsFileContent();
+        String inputString = this.fileUtil.readFileAddedNewLines(GlobalConstants.CARS_INPUT_PATH);
         /* Turn it to dtos */
         CarSeedDto[] dtos = this.gson.fromJson(inputString, CarSeedDto[].class);
         for (CarSeedDto dto : dtos) {
